@@ -50,8 +50,9 @@ export default function DashboardCol1() {
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/telephone'
                 >
-                  <Text>Credit</Text>
+                  <Text>telephone</Text>
                 </Link>
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
@@ -61,8 +62,9 @@ export default function DashboardCol1() {
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/customer'
                 >
-                  <Text>Wallet</Text>
+                  <Text>customer</Text>
                 </Link>
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
@@ -72,8 +74,9 @@ export default function DashboardCol1() {
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/login'
                 >
-                  <Text>Services</Text>
+                  <Text>login</Text>
                 </Link>
               </Flex>
             </Flex>
