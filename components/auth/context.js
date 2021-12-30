@@ -30,7 +30,7 @@ class LoginProvider extends React.Component {
       let data = "";
       let config = {
         method: "post",
-        url: "https://todo-401-401.herokuapp.com/sign-in",
+        url: "https://project401.herokuapp.com/sign-in",
         headers: {
           Authorization: authorization,
         },
@@ -46,6 +46,7 @@ class LoginProvider extends React.Component {
         capabilities: response.data.capabilities,
       });
 
+      console.log(response.data.token)
       this.validateToken(response.data.token);
     } catch (error) {
       console.log(error.message);
@@ -58,7 +59,7 @@ class LoginProvider extends React.Component {
 
   validateToken = (token) => {
     try {
-      let user = jwt.verify(token, process.env.REACT_APP_SECRET);
+      let user = jwt.verify(token, process.env.REACT_APP_SECRET||"secret");
       this.setLoginState(true, token, user);
     } catch (e) {
       this.setLoginState(false, null, {});
