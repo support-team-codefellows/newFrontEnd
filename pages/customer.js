@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 // import {useDispatch} from "react-redux"
 import axios from "axios";
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { useDispatch } from "react-redux";
+import { newDataTelephone, newDataOnSite } from "../redux/actions";
+import { useSelector } from "react-redux";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 import {
-    
   Select,
   FormControl,
   FormLabel,
@@ -14,6 +16,8 @@ import {
 import { Textarea } from "@chakra-ui/react";
 
 function Customer() {
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
   const [inputField, setInputField] = useState({
     customerName: "",
     phoneNumber: "",
@@ -28,24 +32,29 @@ function Customer() {
   };
 
   const onSubmit = async () => {
-    console.log("inputField", inputField);
+    // console.log("inputField", inputField);
 
     if (inputField.department === "Telephone") {
-      await axios.post("http://localhost:3500/telephoneTicket", inputField);
-
-      store.dispatch({
-        type: "TELEPHONETICKET",
-      });
+      await axios.post(
+        "https://project401.herokuapp.com/telephoneTicket",
+        inputField
+      );
+      dispatch(newDataTelephone());
     }
+    console.log("selectorfor newData", selector.newData);
 
     if (inputField.department === "OnSite") {
-      await axios.post("http://localhost:3500/onSiteTicket", inputField);
+      await axios.post(
+        "https://project401.herokuapp.com/onSiteTicket",
+        inputField
+      );
+      dispatch(newDataOnSite());
+      console.log("selector for onsite", selector.onSite);
     }
   };
 
   return (
     <>
-    
       <FormControl>
         <FormLabel htmlFor="email">Username</FormLabel>
         <Input
@@ -101,14 +110,11 @@ function Customer() {
         />
       </FormControl>
 
-      <Button onClick={onSubmit} colorScheme='teal' size='md'>
-    Submit
-  </Button>
- 
+      <Button onClick={onSubmit} colorScheme="teal" size="md">
+        Submit
+      </Button>
     </>
   );
 }
 
 export default Customer;
-
-

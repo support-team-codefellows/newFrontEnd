@@ -1,7 +1,7 @@
 import React from "react";
 import { When } from "react-if";
 import superagent  from "superagent";
-import { LoginContext } from "./helper/auth/context.js";
+import { LoginContext } from "../components/auth/context";
 import base64 from "base-64";
 
 class Login extends React.Component {
