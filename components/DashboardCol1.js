@@ -24,7 +24,7 @@ export default function DashboardCol1() {
               alignSelf="center"
               letterSpacing="tight"
             >
-              Rise.
+              Tangeled.
             </Heading>
             <Flex
               flexDir={["row", "row", "column", "column", "column"]}
@@ -39,6 +39,7 @@ export default function DashboardCol1() {
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
+                  href="/"
                 >
                   <Text className="active">Home</Text>
                 </Link>

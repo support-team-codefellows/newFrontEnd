@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { FormErrors } from "./helper/auth/errorForm";
+import { FormErrors } from "..//components//auth///errorForm";
 import axios from "axios";
 import { When } from "react-if";
-import { LoginContext } from "./helper/auth/context.js";
+import { LoginContext } from "..//components//auth///context";
 import {
   Button,
   Checkbox,
