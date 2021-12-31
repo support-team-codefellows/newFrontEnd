@@ -7,7 +7,13 @@ class Login extends React.Component {
 
   static contextType = LoginContext;
 
+  componentDidMount() {
+  console.log("t3st",LoginContext);
+
+  }
   render() {
+    { 
+    }
     const isLoggedIn = this.context.loggedIn;
     const canDo = this.props.capabilities ? this.context.can(this.props.capabilities) : true;
     const okToRender = isLoggedIn && canDo;
