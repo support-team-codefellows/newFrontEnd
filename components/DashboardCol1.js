@@ -1,6 +1,10 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
 import { FiHome, FiPieChart, FiDollarSign, FiBox } from "react-icons/fi";
+import {useContext} from 'react';
+import { LoginContext } from "./auth/context"; 
 export default function DashboardCol1() {
+  const Context = useContext(LoginContext);
+
   return (
     <>
       {/* Column 1 */}
@@ -84,7 +88,7 @@ export default function DashboardCol1() {
           </Flex>
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
             <Avatar my={2} src="avatar-1.jpg" />
-            <Text textAlign="center">Calvin West</Text>
+            <Text textAlign="center">{Context.user.username}</Text>
           </Flex>
         </Flex>
       </Flex>

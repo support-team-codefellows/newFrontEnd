@@ -18,6 +18,7 @@ class LoginProvider extends React.Component {
   }
 
   can = (capability) => {
+    console.log('hello',this.state.user, capability);
     return this.state.user?.capabilities?.includes(capability);
   };
 
@@ -42,7 +43,8 @@ class LoginProvider extends React.Component {
       this.setState({
         token: response.data.token,
         loggedIn: true,
-        user: { email: response.data.email, username: username.username,capabilities: response.data.capabilities },
+        user: { email: response.data.email, username: username.username},
+        capabilities: response.data.capabilities 
         
       })
       this.validateToken(response.data.token);

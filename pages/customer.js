@@ -19,7 +19,7 @@ import Auth from "../components/auth/auth";
 
 function Customer() {
   const ontext = useContext(LoginContext);
-
+console.log(ontext)
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const [inputField, setInputField] = useState({
@@ -111,11 +111,12 @@ function Customer() {
             value={inputField.description}
             size="lg"
           />
-        </FormControl>
-
-        <Button onClick={onSubmit} colorScheme="teal" size="md">
-          Submit
-        </Button>
+         </FormControl>
+        {/* <Auth capabilities={"delete"}>    </Auth> */} 
+          <Button onClick={onSubmit} colorScheme="teal" size="md">
+            Submit
+          </Button>
+    
       </Auth>
     </>
   );

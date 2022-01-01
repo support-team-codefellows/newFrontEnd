@@ -188,7 +188,10 @@ function Telephone({ newData }) {
                   type="text"
                   name="response"
                   id="response"
-                  onChange={inputsHandler}
+                  onChange={()=> {
+                    inputsHandler
+                    onClose()
+                  }}
                   value={resData.response}
                 />
               </FormControl>
