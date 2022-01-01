@@ -67,7 +67,7 @@ console.log(ontext)
 
   return (
     <>
-      <Auth>
+      {/* <Auth> */}
         <FormControl>
           <FormLabel>Phone Number</FormLabel>
           <Input
@@ -117,7 +117,7 @@ console.log(ontext)
             Submit
           </Button>
     
-      </Auth>
+      {/* </Auth> */}
     </>
   );
 }
