@@ -10,6 +10,7 @@ import {
   createStateSyncMiddleware,
   initStateWithPrevTab,
 } from "redux-state-sync";
+
 const composeEnhancers =
   (typeof window !== "undefined" &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
@@ -34,6 +35,7 @@ function MyApp({ Component, pageProps }) {
             overflow="hidden"
           >
             <DashboardCol1 /> <Component {...pageProps} />
+     
           </Flex>
         </ChakraProvider>
       </LoginContext>

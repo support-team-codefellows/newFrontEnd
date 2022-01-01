@@ -83,6 +83,13 @@ export default function DashboardCol1() {
                 >
                   <Text>login</Text>
                 </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/FAQ'
+                >
+                  <Text>FAQ</Text>
+                </Link>
               </Flex>
             </Flex>
           </Flex>
