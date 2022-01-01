@@ -3,6 +3,7 @@ import { FormErrors } from "..//components//auth///errorForm";
 import axios from "axios";
 import { When } from "react-if";
 import { LoginContext } from "..//components//auth///context";
+import Auth from "..//components//auth///auth";
 import {
   Button,
   Checkbox,
@@ -14,6 +15,7 @@ import {
   Link,
   Stack,
   Image,
+  Select,
 } from "@chakra-ui/react";
 class Signup extends Component {
   static contextType = LoginContext;
@@ -28,6 +30,7 @@ class Signup extends Component {
       passwordValid: false,
       formValid: false,
       name: "",
+      role: "",
     };
   }
   handleSubmit = async (e) => {
@@ -35,10 +38,12 @@ class Signup extends Component {
     let email = this.state.email;
     let password = this.state.password;
     let username = this.state.name;
-    console.log(username);
+    let role = this.state.role;
+    console.log(role);
 
     let url = "https://project401.herokuapp.com/signup";
-    let obj = { email, password, username };
+    let obj = { email, password, username, role };
+
     console.log(obj);
     await axios
       .post(url, obj)
@@ -151,6 +156,23 @@ class Signup extends Component {
                     />
                   </FormControl>
                 </div>
+                <Auth capabilities={'delete'}>
+                <Stack spacing={6}>
+                  <FormControl id="role">
+                    <FormLabel>Role</FormLabel>
+                    <Select
+                      name="role"
+                      placeholder="Select the seginees role"
+                      onChange={this.handleUserInput}
+                      value={this.state.role}
+                    >
+                      <option value="manager">manager</option>
+                      <option value="employee">employee</option>
+                      <option value="client">client</option>
+                    </Select>
+                  </FormControl>
+                </Stack>
+                </Auth>
                 <Stack spacing={6}>
                   <Stack
                     direction={{ base: "column", sm: "row" }}
@@ -183,7 +205,6 @@ class Signup extends Component {
             </Flex>
           </Stack>
         </When>
-        
       </>
     );
   }
