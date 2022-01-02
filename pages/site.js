@@ -42,13 +42,11 @@ function Site({ onSite }) {
   const [resData, setResData] = useState({
     username: Context.user.username,
     response: {
-      customername: "",
-      message: {
         date: "",
         time: "",
-      },
-    },
+    }
   });
+
   const [data, setData] = useState(null);
   const [siteData, setSiteData] = useState([]);
   const [newTickets, setNewTickets] = useState([]);
@@ -76,10 +74,7 @@ function Site({ onSite }) {
       ...resData,
       response: {
         ...resData.response,
-        message: {
-          ...resData.response.message,
           [e.target.name]: e.target.value,
-        },
       },
     });
   };
@@ -106,53 +101,49 @@ function Site({ onSite }) {
     let obj = {
       ...item,
       status: "processed",
+      customerName: 'marwan',
+      username: resData.username,
+      response: JSON.stringify(resData.response)
     };
+    console.log('OBJECT -> ', obj);
     axios
-      .put(`https://project401.herokuapp.com/onSiteTicket/${obj.id}`, obj)
+      .put(`https://test-401.herokuapp.com/onSiteTicket/${obj.id}`, obj)
       .then((res) => {
         axios
-          .get("https://project401.herokuapp.com/onSiteTicket")
+          .get("https://test-401.herokuapp.com/onSiteTicket")
           .then((res) => {
             setSiteData(res.data);
             setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
             setProcessedTickets(res.data.filter((item) => item.status === "processed"));
           });
       });
-    let responseObj = {
-      username: resData.username,
-      response: JSON.stringify({
-        customername: item.customerName,
-        // customername: "marwan", // REMOVE THIS AND KEEP THE ABOVE, I JUST DID IT FOR TESTING PURPOSES //
-        message: resData.response,
-      }),
-    };
-    axios
-      .post(`https://project401.herokuapp.com/response`, responseObj)
-      .then((res) => {
-        console.log('HERE 1 -> ', res.data);
-        // console.log('HERE 2 -> ',JSON.parse(res.data.response));
-       });
   }
 
   function handleDelete(item) {
     axios
-      .delete(`https://project401.herokuapp.com/onSiteTicket/${item.id}`)
+      .delete(`https://test-401.herokuapp.com/onSiteTicket/${item.id}`)
       .then((res) => {
         axios
-          .get("https://project401.herokuapp.com/onSiteTicket")
+          .get("https://test-401.herokuapp.com/onSiteTicket")
           .then((res) => {
             setSiteData(res.data);
-            setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
-            setProcessedTickets(res.data.filter((item) => item.status === "processed"));
+            setNewTickets(
+              res.data.filter((item) => item.status === "unprocessed")
+            );
+            setProcessedTickets(
+              res.data.filter((item) => item.status === "processed")
+            );
           });
       });
   }
 
   useEffect(() => {
-    axios.get("https://project401.herokuapp.com/onSiteTicket").then((res) => {
+    axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
       setSiteData(res.data);
       setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
-      setProcessedTickets(res.data.filter((item) => item.status === "processed"));
+      setProcessedTickets(
+        res.data.filter((item) => item.status === "processed")
+      );
     });
   }, [onSite]);
 
@@ -249,9 +240,9 @@ function Site({ onSite }) {
         {/* The Table's Header */}
         {unprocessedFlag && (
           <>
-            <Flex justifyContent="space-between" mt={8} >
-              <Flex align="flex-end" >
-                <Heading as="h2" size="lg" letterSpacing="tight" >
+            <Flex justifyContent="space-between" mt={8}>
+              <Flex align="flex-end">
+                <Heading as="h2" size="lg" letterSpacing="tight">
                   New Tickets
                 </Heading>
               </Flex>
@@ -352,7 +343,7 @@ function Site({ onSite }) {
 
                               <ModalFooter>
                                 <Button
-                                  onClick={() => responseForm(item)}
+                                  onClick={() => {responseForm(item); onClose}}
                                   size="md"
                                   bgColor="blackAlpha.900"
                                   color="#fff"
