@@ -4,14 +4,16 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { newDataTelephone, newDataOnSite } from "../redux/actions";
 import { useSelector } from "react-redux";
-import { Button, ButtonGroup } from "@chakra-ui/react";
 import {
+  Button,
+  Flex,
+  Heading,
   Select,
   FormControl,
   FormLabel,
   FormErrorMessage,
   Input,
-  FormHelperText,
+  FormHelperText
 } from "@chakra-ui/react";
 import { Textarea } from "@chakra-ui/react";
 import { LoginContext } from "../components/auth/context";
@@ -19,7 +21,7 @@ import Auth from "../components/auth/auth";
 
 function Customer() {
   const ontext = useContext(LoginContext);
-console.log(ontext)
+  console.log(ontext);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const [inputField, setInputField] = useState({
@@ -68,17 +70,18 @@ console.log(ontext)
   return (
     <>
       {/* <Auth> */}
-        <FormControl>
-          <FormLabel>Phone Number</FormLabel>
-          <Input
-            type="text"
-            name="phoneNumber"
-            onChange={inputsHandler}
-            value={inputField.phoneNumber}
-          />
-        </FormControl>
-
-        <FormControl>
+      <Flex
+        w={["100%", "100%", "90%", "90%", "85%"]}
+        p="3%"
+        flexDir="column"
+        overflow="auto"
+        minH="100vh"
+      >
+        <Heading fontWeight="bold" mb={3} letterSpacing="tight">
+          {" "}
+          Submit a Ticket
+        </Heading>
+        <br/><FormControl>
           <FormLabel>Subject</FormLabel>
           <Input
             type="text"
@@ -87,8 +90,7 @@ console.log(ontext)
             value={inputField.subject}
           />
         </FormControl>
-
-        <FormControl>
+        <br/><FormControl>
           <FormLabel htmlFor="country">Department</FormLabel>
           <Select
             size="lg"
@@ -101,22 +103,40 @@ console.log(ontext)
             <option value="Telephone">Telephone</option>
           </Select>
         </FormControl>
-
-        <FormControl>
+        <br/>{inputField.department === "Telephone" ? (
+          <FormControl>
+            <FormLabel>Phone Number</FormLabel>
+            <Input
+              type="text"
+              name="phoneNumber"
+              onChange={inputsHandler}
+              value={inputField.phoneNumber}
+            />
+          </FormControl>
+        ) : (
+          <></>
+        )}
+        <br/><FormControl>
           <FormLabel>Description</FormLabel>
-
           <Textarea
             name="description"
             onChange={inputsHandler}
             value={inputField.description}
             size="lg"
           />
-         </FormControl>
-        {/* <Auth capabilities={"delete"}>    </Auth> */} 
-          <Button onClick={onSubmit} colorScheme="teal" size="md">
-            Submit
-          </Button>
-    
+        </FormControl>
+        {/* <Auth capabilities={"delete"}>    </Auth> */}
+        <br/><br/>
+        <Button
+          onClick={onSubmit}
+          colorScheme="alphaBlack"
+          bgColor="blackAlpha.900"
+          color="#fff"
+          minH="45px"
+        >
+          Submit
+        </Button>
+      </Flex>
       {/* </Auth> */}
     </>
   );
