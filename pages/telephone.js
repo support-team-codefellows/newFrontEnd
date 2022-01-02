@@ -40,8 +40,9 @@ function Telephone({ newData }) {
   const [display, changeDisplay] = useState("hide");
   const [resData, setResData] = useState({
     username: Context.user.username,
-    response: {},
+    response: '',
   });
+
   const [data, setdata] = useState(null);
   const [telephoneData, setTelephoneData] = useState([]);
   const [newTickets, setNewTickets] = useState([]);
@@ -52,18 +53,12 @@ function Telephone({ newData }) {
   const [processedFlag, setProcessedFlag] = useState(false);
   const [allFlag, setAllFlag] = useState(false);
 
-  function handleChange(item) {
-    console.log(item);
-    
-    setdata(item);
-  }
   useEffect(() => {
     setResData({ username: Context.user.username, response: "" });
   }, [Context.user.username]);
 
   const inputsHandler = (e) => {
     setResData({ ...resData, [e.target.name]: e.target.value });
-    console.log('response Data after change: ', resData);
   };
 
   function switchToNew() {
@@ -88,38 +83,30 @@ function Telephone({ newData }) {
     let obj = {
       ...item,
       status: "processed",
+      customerName: 'marwan',
+      username: resData.username,
+      response: resData.response
     };
 
     axios
-      .put(`https://project401.herokuapp.com/telephoneTicket/${obj.id}`, obj)
+      .put(`https://test-401.herokuapp.com/telephoneTicket/${obj.id}`, obj)
       .then((res) => {
         axios
-          .get("https://project401.herokuapp.com/telephoneTicket")
+          .get("https://test-401.herokuapp.com/telephoneTicket")
           .then((res) => {
             setTelephoneData(res.data);
             setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
             setProcessedTickets(res.data.filter((item) => item.status === "processed"));
           });
       });
-    let responseObj = {
-      username: resData.username,
-      response: JSON.stringify({
-        customername: item.customerName,
-        message: resData.response,
-      })
-    };
-    axios.post(`https://project401.herokuapp.com/response`, obj).then((res) => {
-      console.log('HERE 1 -> ', res.data);
-      //  console.log('HERE 2 -> ',JSON.parse(res.data.response));
-    });
   }
 
   function handleDelete(item) {
     axios
-      .delete(`https://project401.herokuapp.com/telephoneTicket/${item.id}`)
+      .delete(`https://test-401.herokuapp.com/telephoneTicket/${item.id}`)
       .then((res) => {
         axios
-          .get("https://project401.herokuapp.com/telephoneTicket")
+          .get("https://test-401.herokuapp.com/telephoneTicket")
           .then((res) => {
             setTelephoneData(res.data);
             setNewTickets(
@@ -134,7 +121,7 @@ function Telephone({ newData }) {
 
   useEffect(() => {
     axios
-      .get("https://project401.herokuapp.com/telephoneTicket")
+      .get("https://test-401.herokuapp.com/telephoneTicket")
       .then((res) => {
         setTelephoneData(res.data);
         setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
