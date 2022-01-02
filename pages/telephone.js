@@ -54,26 +54,7 @@ function Telephone({ newData }) {
 
   function handleChange(item) {
     console.log(item);
-    let obj = {
-      ...item,
-      status: "processed",
-    };
-
-    axios
-      .put(`https://project401.herokuapp.com/telephoneTicket/${obj.id}`, obj)
-      .then((res) => {
-        axios
-          .get("https://project401.herokuapp.com/telephoneTicket")
-          .then((res) => {
-            setTelephoneData(res.data);
-            setNewTickets(
-              res.data.filter((item) => item.status === "unprocessed")
-            );
-            setProcessedTickets(
-              res.data.filter((item) => item.status === "processed")
-            );
-          });
-      });
+    
     setdata(item);
   }
   useEffect(() => {
@@ -82,6 +63,7 @@ function Telephone({ newData }) {
 
   const inputsHandler = (e) => {
     setResData({ ...resData, [e.target.name]: e.target.value });
+    console.log('response Data after change: ', resData);
   };
 
   function switchToNew() {
@@ -102,19 +84,34 @@ function Telephone({ newData }) {
     setAllFlag(true);
   }
 
-  function responseForm() {
+  function responseForm(item) {
     let obj = {
+      ...item,
+      status: "processed",
+    };
+
+    axios
+      .put(`https://project401.herokuapp.com/telephoneTicket/${obj.id}`, obj)
+      .then((res) => {
+        axios
+          .get("https://project401.herokuapp.com/telephoneTicket")
+          .then((res) => {
+            setTelephoneData(res.data);
+            setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
+            setProcessedTickets(res.data.filter((item) => item.status === "processed"));
+          });
+      });
+    let responseObj = {
       username: resData.username,
       response: JSON.stringify({
-        customername: data.customerName,
+        customername: item.customerName,
         message: resData.response,
-      }),
+      })
     };
     axios.post(`https://project401.herokuapp.com/response`, obj).then((res) => {
-      console.log(res.data);
-      //  console.log(JSON.parse(res.data.response));
+      console.log('HERE 1 -> ', res.data);
+      //  console.log('HERE 2 -> ',JSON.parse(res.data.response));
     });
-    console.log(data.customerName);
   }
 
   function handleDelete(item) {
@@ -317,10 +314,7 @@ function Telephone({ newData }) {
                                     type="text"
                                     name="response"
                                     id="response"
-                                    onChange={() => {
-                                      inputsHandler;
-                                      onClose();
-                                    }}
+                                    onChange={inputsHandler}
                                     value={resData.response}
                                   />
                                 </FormControl>
@@ -328,7 +322,7 @@ function Telephone({ newData }) {
                               <ModalFooter>
                               <Button
                                   colorScheme="blackAlpha"
-                                  onClick={responseForm}
+                                  onClick={() => responseForm(item)}
                                   size="md"
                                   bgColor="blackAlpha.900"
                                   color="#fff"
