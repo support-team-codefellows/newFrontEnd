@@ -121,17 +121,17 @@ function Site({ onSite }) {
     let responseObj = {
       username: resData.username,
       response: JSON.stringify({
-        // customername: item.customerName,
-        customername: "marwan", // REMOVE THIS AND KEEP THE ABOVE, I JUST DID IT FOR TESTING PURPOSES //
+        customername: item.customerName,
+        // customername: "marwan", // REMOVE THIS AND KEEP THE ABOVE, I JUST DID IT FOR TESTING PURPOSES //
         message: resData.response,
       }),
     };
     axios
       .post(`https://project401.herokuapp.com/response`, responseObj)
       .then((res) => {
-        console.log(res.data);
-        //  console.log(JSON.parse(res.data.response));
-      });
+        console.log('HERE 1 -> ', res.data);
+        // console.log('HERE 2 -> ',JSON.parse(res.data.response));
+       });
   }
 
   function handleDelete(item) {
