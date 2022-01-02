@@ -62,6 +62,18 @@ export default function DashboardCol1() {
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
+                  <Icon as={FiPieChart} fontSize="2xl" />
+                </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/site'
+                >
+                  <Text>on-site</Text>
+                </Link>
+              </Flex>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiDollarSign} fontSize="2xl" />
                 </Link>
                 <Link
