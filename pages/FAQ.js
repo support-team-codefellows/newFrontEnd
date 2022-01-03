@@ -8,21 +8,9 @@ import {
   Stack,
   Flex,
 } from "@chakra-ui/react";
+import {Data} from "../components/faqData";
 function FAQ() {
-  let data = [
-    {
-      question: "What is the difference between a customer and a user?",
-      answer:"A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
-    },
-    {
-      question: "What is the difference between a customer and a user?",
-      answer:"A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
-    },
-    {
-      question: "What is the difference between a customer and a user?",
-      answer:"A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
-    },
-  ];
+
 
   return (
     <Flex
@@ -32,7 +20,7 @@ function FAQ() {
     >
       <Stack spacing={6}>
         <Box>
-          {data.map((item, index) => (
+          {Data?.map((item, index) => (
             <Accordion key={index}>
               <AccordionItem>
                 <h2>
