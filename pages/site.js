@@ -42,9 +42,9 @@ function Site({ onSite }) {
   const [resData, setResData] = useState({
     username: Context.user.username,
     response: {
-        date: "",
-        time: "",
-    }
+      date: "",
+      time: "",
+    },
   });
 
   const [data, setData] = useState(null);
@@ -74,7 +74,7 @@ function Site({ onSite }) {
       ...resData,
       response: {
         ...resData.response,
-          [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value,
       },
     });
   };
@@ -101,30 +101,34 @@ function Site({ onSite }) {
     let obj = {
       ...item,
       status: "processed",
-      customerName: 'marwan',
+      customerName: "marwan",
       username: resData.username,
-      response: JSON.stringify(resData.response)
+      response: JSON.stringify(resData.response),
     };
-    console.log('OBJECT -> ', obj);
+    console.log("OBJECT -> ", obj);
     axios
-      .put(`https://test-401.herokuapp.com/onSiteTicket/${obj.id}`, obj)
+      .put(`https://project401.herokuapp.com/onSiteTicket/${obj.id}`, obj)
       .then((res) => {
         axios
-          .get("https://test-401.herokuapp.com/onSiteTicket")
+          .get("https://project401.herokuapp.com/onSiteTicket")
           .then((res) => {
             setSiteData(res.data);
-            setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
-            setProcessedTickets(res.data.filter((item) => item.status === "processed"));
+            setNewTickets(
+              res.data.filter((item) => item.status === "unprocessed")
+            );
+            setProcessedTickets(
+              res.data.filter((item) => item.status === "processed")
+            );
           });
       });
   }
 
   function handleDelete(item) {
     axios
-      .delete(`https://test-401.herokuapp.com/onSiteTicket/${item.id}`)
+      .delete(`https://project401.herokuapp.com/onSiteTicket/${item.id}`)
       .then((res) => {
         axios
-          .get("https://test-401.herokuapp.com/onSiteTicket")
+          .get("https://project401.herokuapp.com/onSiteTicket")
           .then((res) => {
             setSiteData(res.data);
             setNewTickets(
@@ -138,7 +142,7 @@ function Site({ onSite }) {
   }
 
   useEffect(() => {
-    axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
+    axios.get("https://project401.herokuapp.com/onSiteTicket").then((res) => {
       setSiteData(res.data);
       setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
       setProcessedTickets(
@@ -343,7 +347,10 @@ function Site({ onSite }) {
 
                               <ModalFooter>
                                 <Button
-                                  onClick={() => {responseForm(item); onClose}}
+                                  onClick={() => {
+                                    responseForm(item);
+                                    onClose;
+                                  }}
                                   size="md"
                                   bgColor="blackAlpha.900"
                                   color="#fff"

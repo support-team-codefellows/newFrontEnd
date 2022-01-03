@@ -48,7 +48,7 @@ function Customer() {
       description: "",
       status: "unprocessed",
       username: "",
-      response: ""
+      response: "",
     });
   }, [ontext.user.username]);
 
@@ -63,17 +63,24 @@ function Customer() {
   // useEffect(() => { setInterval(() => { console.log('hello') }, 900000); }, [])
 
   async function getResponses() {
-    let responses = await axios.get("https://test-401.herokuapp.com/telephoneTicket");
-    let responses2 = await axios.get("https://test-401.herokuapp.com/onSiteTicket");
+    let responses = await axios.get(
+      "https://project401.herokuapp.com/telephoneTicket"
+    );
+    let responses2 = await axios.get(
+      "https://project401.herokuapp.com/onSiteTicket"
+    );
     // CHANGE THE USERNAME
-    setResponsesArray( [...responses.data.filter(item => item.customerName === "marwan"), ...responses2.data.filter(item => item.customerName === "marwan") ]);
-    console.log('this is it -> ', responsesArray);
+    setResponsesArray([
+      ...responses.data.filter((item) => item.customerName === "marwan"),
+      ...responses2.data.filter((item) => item.customerName === "marwan"),
+    ]);
+    console.log("this is it -> ", responsesArray);
   }
 
   const onSubmit = async () => {
     if (inputField.department === "Telephone") {
       await axios.post(
-        "https://test-401.herokuapp.com/telephoneTicket",
+        "https://project401.herokuapp.com/telephoneTicket",
         inputField
       );
       dispatch(newDataTelephone());
@@ -81,7 +88,7 @@ function Customer() {
 
     if (inputField.department === "OnSite") {
       await axios.post(
-        "https://test-401.herokuapp.com/onSiteTicket",
+        "https://project401.herokuapp.com/onSiteTicket",
         inputField
       );
       dispatch(newDataOnSite());
@@ -169,55 +176,60 @@ function Customer() {
           Submit
         </Button>
         <>
-        <br/><Heading as="h2" size="lg" letterSpacing="tight">
+          <br />
+          <Heading as="h2" size="lg" letterSpacing="tight">
             Responses
-          </Heading><br/>
+          </Heading>
+          <br />
           {responsesArray?.map((item, idx) => (
-            <><Stat
-              key={idx}
-              px={{ base: 2, md: 4 }}
-              py={"5"}
-              shadow={"xl"}
-              border={"1px solid"}
-              borderColor={("gray.800", "gray.500")}
-              rounded={"lg"}
-            >
-              <Flex justifyContent={"space-between"}>
-                <Box pl={{ base: 2, md: 4 }}>
-                  {item.department === "OnSite" ? (
-                    <StatLabel fontWeight={"medium"} isTruncated>
-                      <Text fontSize="md" fontWeight="bold">
-                        Response for {item.subject}
-                      </Text>
-                      <br />
-                      <b>Date: </b>
-                      {JSON.parse(item.response).date}
-                      <br />
-                      <b>Time: </b>
-                      {JSON.parse(item.response).time}
-                    </StatLabel>
-                  ) : (
-                    <StatLabel fontWeight={"medium"} isTruncated>
-                      <Text fontSize="md" fontWeight="bold">
-                        Response for {item.subject}
-                      </Text>
-                      <br />
-                      {item.response}
-                    </StatLabel>
-                  )}
-                  <br />
-                  <Text fontSize="md">
-                    <b>Rate</b> {item.username}
-                  </Text>
-                  <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={24}
-                    color2={"#ffd700"}
-                  />
-                </Box>
-              </Flex>
-            </Stat> <br/></>
+            <>
+              <Stat
+                key={idx}
+                px={{ base: 2, md: 4 }}
+                py={"5"}
+                shadow={"xl"}
+                border={"1px solid"}
+                borderColor={("gray.800", "gray.500")}
+                rounded={"lg"}
+              >
+                <Flex justifyContent={"space-between"}>
+                  <Box pl={{ base: 2, md: 4 }}>
+                    {item.department === "OnSite" ? (
+                      <StatLabel fontWeight={"medium"} isTruncated>
+                        <Text fontSize="md" fontWeight="bold">
+                          Response for {item.subject}
+                        </Text>
+                        <br />
+                        <b>Date: </b>
+                        {JSON.parse(item.response).date}
+                        <br />
+                        <b>Time: </b>
+                        {JSON.parse(item.response).time}
+                      </StatLabel>
+                    ) : (
+                      <StatLabel fontWeight={"medium"} isTruncated>
+                        <Text fontSize="md" fontWeight="bold">
+                          Response for {item.subject}
+                        </Text>
+                        <br />
+                        {item.response}
+                      </StatLabel>
+                    )}
+                    <br />
+                    <Text fontSize="md">
+                      <b>Rate</b> {item.username}
+                    </Text>
+                    <ReactStars
+                      count={5}
+                      onChange={ratingChanged}
+                      size={24}
+                      color2={"#ffd700"}
+                    />
+                  </Box>
+                </Flex>
+              </Stat>{" "}
+              <br />
+            </>
           ))}
         </>
       </Flex>
