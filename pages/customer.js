@@ -5,6 +5,7 @@ import ReactStars from "react-stars";
 import { useDispatch } from "react-redux";
 import { newDataTelephone, newDataOnSite } from "../redux/actions";
 import { useSelector } from "react-redux";
+import useInterval from "../components/hooks/useInterval";
 import {
   Button,
   Flex,
@@ -19,8 +20,8 @@ import {
   Stat,
   StatLabel,
   Box,
+  Textarea
 } from "@chakra-ui/react";
-import { Textarea } from "@chakra-ui/react";
 import { LoginContext } from "../components/auth/context";
 import Auth from "../components/auth/auth";
 import { connect } from "react-redux";
@@ -62,7 +63,24 @@ function Customer() {
     getResponses();
   }, []);
 
-  // useEffect(() => { setInterval(() => { console.log('hello') }, 900000); }, [])
+  // short polling:
+  useInterval(async () => {
+    console.log("short polling is working");
+    let responses = await axios.get(
+      "https://test-401.herokuapp.com/telephoneTicket"
+    );
+    let responses2 = await axios.get(
+      "https://test-401.herokuapp.com/onSiteTicket"
+    );
+    let receivedResponses = [
+      ...responses.data.filter((item) => item.customerName === "marwan"),
+      ...responses2.data.filter((item) => item.customerName === "marwan")
+    ];
+    if (receivedResponses?.length !== responsesArray?.length) {
+      console.log(">> the customer has received new responses");
+      setResponsesArray(receivedResponses);
+    }
+  }, 6000);
 
   async function getResponses() {
     let responses = await axios.get(
@@ -76,7 +94,6 @@ function Customer() {
       ...responses.data.filter((item) => item.customerName === "marwan"),
       ...responses2.data.filter((item) => item.customerName === "marwan"),
     ]);
-    console.log("this is it -> ", responsesArray);
   }
 
   const onSubmit = async () => {
@@ -191,7 +208,7 @@ function Customer() {
             Responses
           </Heading>
           <br />
-          {responsesArray?.map((item, idx) => (
+          {responsesArray.length && responsesArray.map((item, idx) => (
             <>
               <Stat
                 key={idx}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
+import useInterval from "../components/hooks/useInterval";
 import {
   Flex,
   Heading,
@@ -42,9 +43,9 @@ function Site({ onSite }) {
   const [resData, setResData] = useState({
     username: Context.user.username,
     response: {
-        date: "",
-        time: "",
-    }
+      date: "",
+      time: "",
+    },
   });
 
   const [data, setData] = useState(null);
@@ -56,6 +57,7 @@ function Site({ onSite }) {
   const [unprocessedFlag, setUnprocessedFlag] = useState(true);
   const [processedFlag, setProcessedFlag] = useState(false);
   const [allFlag, setAllFlag] = useState(false);
+  const [currentTicket, setCurrentTicket] = useState({});
 
   function handleChange(item) {
     console.log(item);
@@ -74,7 +76,7 @@ function Site({ onSite }) {
       ...resData,
       response: {
         ...resData.response,
-          [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value,
       },
     });
   };
@@ -101,21 +103,23 @@ function Site({ onSite }) {
     let obj = {
       ...item,
       status: "processed",
-      customerName: 'marwan',
+      customerName: "marwan",
       username: resData.username,
-      response: JSON.stringify(resData.response)
+      response: JSON.stringify(resData.response),
     };
-    console.log('OBJECT -> ', obj);
+    console.log("OBJECT -> ", obj);
     axios
       .put(`https://test-401.herokuapp.com/onSiteTicket/${obj.id}`, obj)
       .then((res) => {
-        axios
-          .get("https://test-401.herokuapp.com/onSiteTicket")
-          .then((res) => {
-            setSiteData(res.data);
-            setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
-            setProcessedTickets(res.data.filter((item) => item.status === "processed"));
-          });
+        axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
+          setSiteData(res.data);
+          setNewTickets(
+            res.data.filter((item) => item.status === "unprocessed")
+          );
+          setProcessedTickets(
+            res.data.filter((item) => item.status === "processed")
+          );
+        });
       });
   }
 
@@ -123,19 +127,32 @@ function Site({ onSite }) {
     axios
       .delete(`https://test-401.herokuapp.com/onSiteTicket/${item.id}`)
       .then((res) => {
-        axios
-          .get("https://test-401.herokuapp.com/onSiteTicket")
-          .then((res) => {
-            setSiteData(res.data);
-            setNewTickets(
-              res.data.filter((item) => item.status === "unprocessed")
-            );
-            setProcessedTickets(
-              res.data.filter((item) => item.status === "processed")
-            );
-          });
+        axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
+          setSiteData(res.data);
+          setNewTickets(
+            res.data.filter((item) => item.status === "unprocessed")
+          );
+          setProcessedTickets(
+            res.data.filter((item) => item.status === "processed")
+          );
+        });
       });
   }
+
+  // short polling:
+  useInterval(() => {
+    console.log("short polling is working");
+    axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
+      if (res.data?.length !== siteData?.length) {
+        console.log(">> the on-site department has received new data");
+        setSiteData(res.data);
+        setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
+        setProcessedTickets(
+          res.data.filter((item) => item.status === "processed")
+        );
+      }
+    });
+  }, 6000);
 
   useEffect(() => {
     axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
@@ -285,7 +302,10 @@ function Site({ onSite }) {
                             </Td>
                             <Td>
                               <Button
-                                onClick={onOpen}
+                                onClick={() => {
+                                  setCurrentTicket(item);
+                                  onOpen();
+                                }}
                                 colorScheme="blackAlpha"
                                 bgColor="blackAlpha.900"
                                 color="#fff"
@@ -294,72 +314,6 @@ function Site({ onSite }) {
                               </Button>
                             </Td>
                           </Tr>
-                          <Modal isOpen={isOpen} onClose={onClose}>
-                            <ModalOverlay />
-                            <ModalContent>
-                              <ModalHeader>
-                                {item.subject}
-                                <br />
-                                <Text fontSize="sm" color="gray">
-                                  {item.createdAt}
-                                </Text>
-                                <hr />
-                              </ModalHeader>
-                              <ModalCloseButton />
-                              <ModalBody>
-                                <Text>
-                                  <b>Customer Name:</b> {item.customerName}{" "}
-                                </Text>
-                                <Text>
-                                  <b>Description:</b> {item.description}{" "}
-                                </Text>
-                                <br />
-                                <FormControl>
-                                  <FormLabel>Claimed by:</FormLabel>
-                                  <Input
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    onChange={inputsHandler}
-                                    defaultValue={resData.username}
-                                  />
-                                </FormControl>
-                                <FormControl>
-                                  <FormLabel>Appointment Details</FormLabel>
-                                  <Input
-                                    type="date"
-                                    name="date"
-                                    onChange={inputsHandler2}
-                                  />
-                                  <Input
-                                    type="time"
-                                    name="time"
-                                    min="09:00"
-                                    max="15:00"
-                                    onChange={inputsHandler2}
-                                  />
-                                </FormControl>
-                              </ModalBody>
-
-                              <ModalFooter>
-                                <Button
-                                  onClick={() => {responseForm(item); onClose}}
-                                  size="md"
-                                  bgColor="blackAlpha.900"
-                                  color="#fff"
-                                >
-                                  Submit
-                                </Button>
-                                <Button
-                                  colorScheme="blackAlpha"
-                                  mr={3}
-                                  onClick={onClose}
-                                >
-                                  Close
-                                </Button>
-                              </ModalFooter>
-                            </ModalContent>
-                          </Modal>
                         </>
                       );
                     })}
@@ -370,6 +324,69 @@ function Site({ onSite }) {
           </>
         )}
         {/* The New Tickets Table End */}
+
+        {/* The Modal */}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              {currentTicket.subject}
+              <br />
+              <Text fontSize="sm" color="gray">
+                {currentTicket.createdAt}
+              </Text>
+              <hr />
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>
+                <b>Customer Name:</b> {currentTicket.customerName}{" "}
+              </Text>
+              <Text>
+                <b>Description:</b> {currentTicket.description}{" "}
+              </Text>
+              <br />
+              <FormControl>
+                <FormLabel>Claimed by:</FormLabel>
+                <Input
+                  type="text"
+                  id="username"
+                  name="username"
+                  onChange={inputsHandler}
+                  defaultValue={resData.username}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Appointment Details</FormLabel>
+                <Input type="date" name="date" onChange={inputsHandler2} />
+                <Input
+                  type="time"
+                  name="time"
+                  min="09:00"
+                  max="15:00"
+                  onChange={inputsHandler2}
+                />
+              </FormControl>
+            </ModalBody>
+
+            <ModalFooter>
+              <Button
+                onClick={() => {
+                  responseForm(currentTicket);
+                  onClose();
+                }}
+                size="md"
+                bgColor="blackAlpha.900"
+                color="#fff"
+              >
+                Submit
+              </Button>
+              <Button colorScheme="blackAlpha" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
 
         {/* The Processed Tickets Table */}
         {/* The Table's Header */}
