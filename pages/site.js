@@ -35,30 +35,48 @@ import {
 import { LoginContext } from "../components/auth/context";
 import axios from "axios";
 import { connect } from "react-redux";
-function Telephone({ newData }) {
+
+function Site({ onSite }) {
   const Context = useContext(LoginContext);
   const [display, changeDisplay] = useState("hide");
   const [resData, setResData] = useState({
     username: Context.user.username,
-    response: '',
+    response: {
+        date: "",
+        time: "",
+    }
   });
 
-  const [data, setdata] = useState(null);
-  const [telephoneData, setTelephoneData] = useState([]);
+  const [data, setData] = useState(null);
+  const [siteData, setSiteData] = useState([]);
   const [newTickets, setNewTickets] = useState([]);
   const [processedTickets, setProcessedTickets] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const SelectorData = useSelector((state) => state.newData);
+  const SelectorData = useSelector((state) => state.onSite);
   const [unprocessedFlag, setUnprocessedFlag] = useState(true);
   const [processedFlag, setProcessedFlag] = useState(false);
   const [allFlag, setAllFlag] = useState(false);
 
+  function handleChange(item) {
+    console.log(item);
+  }
+
   useEffect(() => {
-    setResData({ username: Context.user.username, response: "" });
+    setResData({ ...resData, username: Context.user.username });
   }, [Context.user.username]);
 
   const inputsHandler = (e) => {
     setResData({ ...resData, [e.target.name]: e.target.value });
+  };
+
+  const inputsHandler2 = (e) => {
+    setResData({
+      ...resData,
+      response: {
+        ...resData.response,
+          [e.target.name]: e.target.value,
+      },
+    });
   };
 
   function switchToNew() {
@@ -85,16 +103,16 @@ function Telephone({ newData }) {
       status: "processed",
       customerName: 'marwan',
       username: resData.username,
-      response: resData.response
+      response: JSON.stringify(resData.response)
     };
-
+    console.log('OBJECT -> ', obj);
     axios
-      .put(`https://test-401.herokuapp.com/telephoneTicket/${obj.id}`, obj)
+      .put(`https://test-401.herokuapp.com/onSiteTicket/${obj.id}`, obj)
       .then((res) => {
         axios
-          .get("https://test-401.herokuapp.com/telephoneTicket")
+          .get("https://test-401.herokuapp.com/onSiteTicket")
           .then((res) => {
-            setTelephoneData(res.data);
+            setSiteData(res.data);
             setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
             setProcessedTickets(res.data.filter((item) => item.status === "processed"));
           });
@@ -103,12 +121,12 @@ function Telephone({ newData }) {
 
   function handleDelete(item) {
     axios
-      .delete(`https://test-401.herokuapp.com/telephoneTicket/${item.id}`)
+      .delete(`https://test-401.herokuapp.com/onSiteTicket/${item.id}`)
       .then((res) => {
         axios
-          .get("https://test-401.herokuapp.com/telephoneTicket")
+          .get("https://test-401.herokuapp.com/onSiteTicket")
           .then((res) => {
-            setTelephoneData(res.data);
+            setSiteData(res.data);
             setNewTickets(
               res.data.filter((item) => item.status === "unprocessed")
             );
@@ -120,16 +138,14 @@ function Telephone({ newData }) {
   }
 
   useEffect(() => {
-    axios
-      .get("https://test-401.herokuapp.com/telephoneTicket")
-      .then((res) => {
-        setTelephoneData(res.data);
-        setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
-        setProcessedTickets(
-          res.data.filter((item) => item.status === "processed")
-        );
-      });
-  }, [newData]);
+    axios.get("https://test-401.herokuapp.com/onSiteTicket").then((res) => {
+      setSiteData(res.data);
+      setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
+      setProcessedTickets(
+        res.data.filter((item) => item.status === "processed")
+      );
+    });
+  }, [onSite]);
 
   return (
     <>
@@ -142,7 +158,7 @@ function Telephone({ newData }) {
       >
         <Heading fontWeight="bold" mb={3} letterSpacing="tight">
           {" "}
-          Telephone Department
+          The On-Site Department
         </Heading>
         <Text fontSize="small" color="gray" ml={1}>
           {new Date().toLocaleDateString(undefined, {
@@ -213,14 +229,13 @@ function Telephone({ newData }) {
                     Total
                   </StatLabel>
                   <StatNumber fontSize={"2xl"} fontWeight={"medium"}>
-                    {telephoneData.length}
+                    {siteData.length}
                   </StatNumber>
                 </Box>
               </Flex>
             </Stat>
           </SimpleGrid>
         </Box>
-        {/* Tables */}
         {/* The New Tickets Table */}
         {/* The Table's Header */}
         {unprocessedFlag && (
@@ -282,11 +297,25 @@ function Telephone({ newData }) {
                           <Modal isOpen={isOpen} onClose={onClose}>
                             <ModalOverlay />
                             <ModalContent>
-                              <ModalHeader>Modal Title</ModalHeader>
+                              <ModalHeader>
+                                {item.subject}
+                                <br />
+                                <Text fontSize="sm" color="gray">
+                                  {item.createdAt}
+                                </Text>
+                                <hr />
+                              </ModalHeader>
                               <ModalCloseButton />
                               <ModalBody>
+                                <Text>
+                                  <b>Customer Name:</b> {item.customerName}{" "}
+                                </Text>
+                                <Text>
+                                  <b>Description:</b> {item.description}{" "}
+                                </Text>
+                                <br />
                                 <FormControl>
-                                  <FormLabel>username</FormLabel>
+                                  <FormLabel>Claimed by:</FormLabel>
                                   <Input
                                     type="text"
                                     id="username"
@@ -296,27 +325,31 @@ function Telephone({ newData }) {
                                   />
                                 </FormControl>
                                 <FormControl>
-                                  <FormLabel>Response</FormLabel>
+                                  <FormLabel>Appointment Details</FormLabel>
                                   <Input
-                                    type="text"
-                                    name="response"
-                                    id="response"
-                                    onChange={inputsHandler}
-                                    value={resData.response}
+                                    type="date"
+                                    name="date"
+                                    onChange={inputsHandler2}
+                                  />
+                                  <Input
+                                    type="time"
+                                    name="time"
+                                    min="09:00"
+                                    max="15:00"
+                                    onChange={inputsHandler2}
                                   />
                                 </FormControl>
                               </ModalBody>
+
                               <ModalFooter>
-                              <Button
-                                  colorScheme="blackAlpha"
-                                  onClick={() => responseForm(item)}
+                                <Button
+                                  onClick={() => {responseForm(item); onClose}}
                                   size="md"
                                   bgColor="blackAlpha.900"
                                   color="#fff"
                                 >
                                   Submit
                                 </Button>
-
                                 <Button
                                   colorScheme="blackAlpha"
                                   mr={3}
@@ -425,7 +458,7 @@ function Telephone({ newData }) {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {telephoneData?.map((item, i) => {
+                    {siteData?.map((item, i) => {
                       return (
                         <>
                           <Tr key={i}>
@@ -466,6 +499,6 @@ function Telephone({ newData }) {
 }
 export default connect((state) => {
   return {
-    newData: state.newData,
+    onSite: state.onSite,
   };
-}, null)(Telephone);
+}, null)(Site);

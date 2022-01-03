@@ -1,5 +1,5 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
-import { FiHome, FiPieChart, FiDollarSign, FiBox } from "react-icons/fi";
+import { FiHome, FiPieChart, FiDollarSign, FiBox, FiPhone, FiCalendar, FiUser, FiPlus } from "react-icons/fi";
 import {useContext} from 'react';
 import { If, Then, Else } from 'react-if';
 import { LoginContext } from "./auth/context"; 
@@ -57,28 +57,42 @@ export default function DashboardCol1() {
           <If condition= {Context.loggedIn}>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiPieChart} fontSize="2xl" />
+                  <Icon as={FiPhone} fontSize="2xl" />
                 </Link>
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/telephone'
-                  >
-                  <Text>telephone</Text>
+
+                >
+                  <Text>Telephone</Text>
                 </Link>
    
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiDollarSign} fontSize="2xl" />
+                  <Icon as={FiCalendar} fontSize="2xl" />
+                </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/site'
+                >
+                  <Text>On-Site</Text>
+                </Link>
+              </Flex>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link display={["none", "none", "flex", "flex", "flex"]}>
+                  <Icon as={FiPlus} fontSize="2xl" />
                 </Link>
               
               <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/customer'
-                  >
-                  <Text>customer</Text>
+
+                >
+                  <Text>Tickets</Text>
                 </Link>
     
                
@@ -88,14 +102,17 @@ export default function DashboardCol1() {
 
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiBox} fontSize="2xl" />
+                  <Icon as={FiUser} fontSize="2xl" />
                 </Link>
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/login'
-                  >
-                  <Text>login</Text>
+
+
+                >
+                  <Text>Login</Text>
+
                 </Link>
                 <Link
                   _hover={{ textDecor: "none" }}
