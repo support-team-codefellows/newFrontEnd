@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useSelector } from "react-redux";
+import useInterval from "../components/hooks/useInterval";
 import {
   Flex,
   Heading,
@@ -31,6 +32,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  Textarea
 } from "@chakra-ui/react";
 import { LoginContext } from "../components/auth/context";
 import axios from "axios";
@@ -40,7 +42,7 @@ function Telephone({ newData }) {
   const [display, changeDisplay] = useState("hide");
   const [resData, setResData] = useState({
     username: Context.user.username,
-    response: '',
+    response: "",
   });
 
   const [data, setdata] = useState(null);
@@ -52,6 +54,7 @@ function Telephone({ newData }) {
   const [unprocessedFlag, setUnprocessedFlag] = useState(true);
   const [processedFlag, setProcessedFlag] = useState(false);
   const [allFlag, setAllFlag] = useState(false);
+  const [currentTicket, setCurrentTicket] = useState({});
 
   useEffect(() => {
     setResData({ username: Context.user.username, response: "" });
@@ -83,9 +86,9 @@ function Telephone({ newData }) {
     let obj = {
       ...item,
       status: "processed",
-      customerName: 'marwan',
+      customerName: "marwan",
       username: resData.username,
-      response: resData.response
+      response: resData.response,
     };
 
     axios
@@ -95,8 +98,12 @@ function Telephone({ newData }) {
           .get("https://test-401.herokuapp.com/telephoneTicket")
           .then((res) => {
             setTelephoneData(res.data);
-            setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
-            setProcessedTickets(res.data.filter((item) => item.status === "processed"));
+            setNewTickets(
+              res.data.filter((item) => item.status === "unprocessed")
+            );
+            setProcessedTickets(
+              res.data.filter((item) => item.status === "processed")
+            );
           });
       });
   }
@@ -119,16 +126,29 @@ function Telephone({ newData }) {
       });
   }
 
-  useEffect(() => {
-    axios
-      .get("https://test-401.herokuapp.com/telephoneTicket")
-      .then((res) => {
+  // short polling:
+  useInterval(() => {
+    console.log("short polling is working");
+    axios.get("https://test-401.herokuapp.com/telephoneTicket").then((res) => {
+      if (res.data?.length !== telephoneData?.length) {
+        console.log(">> the telephone department has received new data");
         setTelephoneData(res.data);
         setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
         setProcessedTickets(
           res.data.filter((item) => item.status === "processed")
         );
-      });
+      }
+    });
+  }, 6000);
+
+  useEffect(() => {
+    axios.get("https://test-401.herokuapp.com/telephoneTicket").then((res) => {
+      setTelephoneData(res.data);
+      setNewTickets(res.data.filter((item) => item.status === "unprocessed"));
+      setProcessedTickets(
+        res.data.filter((item) => item.status === "processed")
+      );
+    });
   }, [newData]);
 
   return (
@@ -270,7 +290,10 @@ function Telephone({ newData }) {
                             </Td>
                             <Td>
                               <Button
-                                onClick={onOpen}
+                                onClick={() => {
+                                  setCurrentTicket(item);
+                                  onOpen();
+                                }}
                                 colorScheme="blackAlpha"
                                 bgColor="blackAlpha.900"
                                 color="#fff"
@@ -279,54 +302,6 @@ function Telephone({ newData }) {
                               </Button>
                             </Td>
                           </Tr>
-                          <Modal isOpen={isOpen} onClose={onClose}>
-                            <ModalOverlay />
-                            <ModalContent>
-                              <ModalHeader>Modal Title</ModalHeader>
-                              <ModalCloseButton />
-                              <ModalBody>
-                                <FormControl>
-                                  <FormLabel>username</FormLabel>
-                                  <Input
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    onChange={inputsHandler}
-                                    defaultValue={resData.username}
-                                  />
-                                </FormControl>
-                                <FormControl>
-                                  <FormLabel>Response</FormLabel>
-                                  <Input
-                                    type="text"
-                                    name="response"
-                                    id="response"
-                                    onChange={inputsHandler}
-                                    value={resData.response}
-                                  />
-                                </FormControl>
-                              </ModalBody>
-                              <ModalFooter>
-                              <Button
-                                  colorScheme="blackAlpha"
-                                  onClick={() => responseForm(item)}
-                                  size="md"
-                                  bgColor="blackAlpha.900"
-                                  color="#fff"
-                                >
-                                  Submit
-                                </Button>
-
-                                <Button
-                                  colorScheme="blackAlpha"
-                                  mr={3}
-                                  onClick={onClose}
-                                >
-                                  Close
-                                </Button>
-                              </ModalFooter>
-                            </ModalContent>
-                          </Modal>
                         </>
                       );
                     })}
@@ -337,6 +312,66 @@ function Telephone({ newData }) {
           </>
         )}
         {/* The New Tickets Table End */}
+        {/* The Modal */}
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              {currentTicket.subject}
+              <br />
+              <Text fontSize="sm" color="gray">
+                {currentTicket.createdAt}
+              </Text>
+              <hr />
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>
+                {console.log(currentTicket)}
+                <b>Customer Name:</b> {currentTicket.customerName}{" "}
+              </Text>
+              <Text>
+                <b>Description:</b> {currentTicket.description}{" "}
+              </Text>
+              <br />
+              <FormControl>
+                <FormLabel>Claimed by:</FormLabel>
+                <Input
+                  type="text"
+                  id="username"
+                  name="username"
+                  onChange={inputsHandler}
+                  defaultValue={resData.username}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Response</FormLabel>
+                <Textarea
+                  name="response"
+                  id="response"
+                  onChange={inputsHandler}
+                  value={resData.response}
+                  size="lg"
+                />
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                colorScheme="blackAlpha"
+                onClick={() => {responseForm(currentTicket); onClose()}}
+                size="md"
+                bgColor="blackAlpha.900"
+                color="#fff"
+              >
+                Submit
+              </Button>
+
+              <Button colorScheme="blackAlpha" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
 
         {/* The Processed Tickets Table */}
         {/* The Table's Header */}
