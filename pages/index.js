@@ -35,24 +35,7 @@ export default function Home() {
         color2={"#ffd700"}
       />
       <If condition={Context.loggedIn}>
-        <Flex >
-          <Spacer />
-          <Box p='2' bg='' style={{ marginLeft: "1016px", marginTop: "650px" }}>
-            <Popover placement='top-start'>
-              <PopoverTrigger>
-                <Button leftIcon={<BsFillChatDotsFill />} >Chat</Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverHeader fontWeight='semibold'>Chat</PopoverHeader>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverBody>
-                  <ChatFrom />
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
-          </Box>
-        </Flex>
+        
       </If>
 
 

@@ -23,7 +23,12 @@ export default function DashboardCol1() {
           justifyContent="space-between"
         >
           <Flex flexDir="column" as="nav">
-         
+          <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href="/"
+                  >
+  
             <Heading
               mt={50}
               mb={[25, 50, 100]}
@@ -33,13 +38,15 @@ export default function DashboardCol1() {
             >
               Tangeled.
             </Heading>
+
+            </Link>
             <Flex
               flexDir={["row", "row", "column", "column", "column"]}
               align={["center", "center", "center", "flex-start", "flex-start"]}
               wrap={["wrap", "wrap", "nowrap", "nowrap", "nowrap"]}
               justifyContent="center"
             >
-                <If condition= {Context.loggedIn}>
+              
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiHome} fontSize="2xl" className="active-icon" />
@@ -53,8 +60,8 @@ export default function DashboardCol1() {
                   <Text className="active">Home</Text>
                 </Link>
               </Flex>
-                  </If>
-          <If condition= {Context.loggedIn}>
+               
+          
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPhone} fontSize="2xl" />
@@ -97,9 +104,8 @@ export default function DashboardCol1() {
     
                
               </Flex>
-                    </If>  
-                    <If condition= {!Context.loggedIn}>
-
+               
+            
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiUser} fontSize="2xl" />
@@ -114,16 +120,20 @@ export default function DashboardCol1() {
                   <Text>Login</Text>
 
                 </Link>
+                </Flex>
+                <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/FAQ'
                   >
+                   <Icon as={FiUser} fontSize="2xl" />
                   <Text>FAQ</Text>
                 </Link>
+
               </Flex>
-                  </If>
-                  <If condition= {Context.loggedIn}>
+               
+                
                   <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiBox} fontSize="2xl" />
@@ -136,7 +146,7 @@ export default function DashboardCol1() {
                   <Text><button onClick={Context.logout}>LogOut</button></Text>
                 </Link>
                 </Flex>
-                  </If>
+               
             </Flex>
           </Flex>
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>

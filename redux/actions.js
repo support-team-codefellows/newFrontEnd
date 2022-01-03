@@ -13,3 +13,10 @@ export const newDataOnSite = () => {
     }
     
     }   
+
+export const rateing = () => {
+    return {
+        type: 'rateing',
+        
+    }
+}

@@ -24,13 +24,15 @@ import {
 } from "@chakra-ui/react";
 import { LoginContext } from "../components/auth/context";
 import Auth from "../components/auth/auth";
-
+import { connect } from "react-redux";
 function Customer() {
   const ontext = useContext(LoginContext);
   console.log(ontext);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
+  console.log(selector)
   const [responsesArray, setResponsesArray] = useState([]);
+  const [rate, setRate] = useState({ reating: 0, username: "" });
   const [inputField, setInputField] = useState({
     customerName: ontext.user.username,
     phoneNumber: "",
@@ -114,9 +116,16 @@ function Customer() {
     console.log("inputField", inputField);
   };
 
-  // for the rating:
-  const ratingChanged = (newRating) => {
-    console.log(newRating);
+  const ratingChanged = (newRating, item) => {
+    dispatch({
+      type: "RATING",
+      payload: {
+        reating: newRating,
+        username: item.username,
+      },
+    });
+    setRate({ reating: newRating, username:item.username});
+  
   };
 
   return (
@@ -239,7 +248,7 @@ function Customer() {
                     </Text>
                     <ReactStars
                       count={5}
-                      onChange={ratingChanged}
+                      onChange={(newRating) => ratingChanged(newRating, item)}
                       size={24}
                       color2={"#ffd700"}
                     />
