@@ -1,6 +1,7 @@
 const inisialState = {
   newData: false,
   onSite: false,
+  rateing : {  reating: "", username: ""}
 };
 
 export default function reducer(state = inisialState, action) {
@@ -16,8 +17,13 @@ export default function reducer(state = inisialState, action) {
         ...state,
         onSite: !state.onSite,
       };
-
+case 'RATING':
+  return {
+    ...state,
+    rateing: action.payload,
+  };
     default:
       return state;
   }
+
 }
