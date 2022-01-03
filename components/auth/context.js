@@ -13,24 +13,25 @@ class LoginProvider extends React.Component {
       can: this.can,
       login: this.login,
       logout: this.logout,
-      user: { capabilities: [] },
+      user: {email:'', username:'', capabilities: [] },
     };
   }
 
   can = (capability) => {
+    console.log('hello',this.state.user, capability);
     return this.state.user?.capabilities?.includes(capability);
   };
 
-  login = async (username, password) => {
+  login = async (email, password ,username=this.state.user.username) => {
     try {
-      const encodedBase64Token = Buffer.from(
-        `${username}:${password}`
-      ).toString("base64");
+      const encodedBase64Token = Buffer.from(`${email}:${password}`).toString(
+        "base64"
+      );
       const authorization = `Basic ${encodedBase64Token}`;
       let data = "";
       let config = {
         method: "post",
-        url: "https://todo-401-401.herokuapp.com/sign-in",
+        url: "https://project401.herokuapp.com/sign-in",
         headers: {
           Authorization: authorization,
         },
@@ -42,10 +43,10 @@ class LoginProvider extends React.Component {
       this.setState({
         token: response.data.token,
         loggedIn: true,
-        user: response.data.username,
-        capabilities: response.data.capabilities,
-      });
-
+        user: { email: response.data.email, username: username.username},
+        capabilities: response.data.capabilities 
+        
+      })
       this.validateToken(response.data.token);
     } catch (error) {
       console.log(error.message);
@@ -53,22 +54,28 @@ class LoginProvider extends React.Component {
   };
 
   logout = () => {
-    this.setLoginState(false, null, {});
+    this.setLoginState(false, null, {},null);
   };
 
   validateToken = (token) => {
     try {
-      let user = jwt.verify(token, process.env.REACT_APP_SECRET);
-      this.setLoginState(true, token, user);
+      console.log(this.state.user.username)
+      let un= this.state.user.username;
+      let user = jwt.verify(token, process.env.REACT_APP_SECRET || "secret");
+      this.setLoginState(true, token, user,un);
+      
     } catch (e) {
-      this.setLoginState(false, null, {});
+      this.setLoginState(false, null, {}, null);
       console.log("Token Validation Error", e);
     }
   };
-
-  setLoginState = (loggedIn, token, user) => {
+  setLoginState = (loggedIn, token, user, username) => {
     cookie.save("auth", token);
-    this.setState({ token, loggedIn, user });
+   console.log("something", user);
+    this.setState({ token, loggedIn, user, username });
+    let n= username;
+    console.log(n)
+    return user
   };
 
   componentDidMount() {

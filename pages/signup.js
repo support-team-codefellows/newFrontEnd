@@ -1,8 +1,28 @@
 import React, { Component } from "react";
-import { FormErrors } from "./helper/auth/errorForm";
+import { FormErrors } from "..//components//auth///errorForm";
 import axios from "axios";
+import { When } from "react-if";
+import { LoginContext } from "..//components//auth///context";
+import Swal from 'sweetalert2';
+import Auth from "..//components//auth///auth";
+import Router from 'next/router';
 
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Link,
+  Stack,
+  Image,
+  Select,
+} from "@chakra-ui/react";
 class Signup extends Component {
+  static contextType = LoginContext;
   constructor(props) {
     super(props);
     this.state = {
@@ -13,32 +33,50 @@ class Signup extends Component {
       emailValid: false,
       passwordValid: false,
       formValid: false,
+      name: "",
+      role: "",
     };
   }
   handleSubmit = async (e) => {
     e.preventDefault();
-
-    let username = this.state.email;
+    let email = this.state.email;
     let password = this.state.password;
-    let lastname = e.target.name.value;
+    let username = this.state.name;
+    let role = this.state.role;
+    console.log(role);
+//https://project401.herokuapp.com/signup
+    let url = "https://project401.herokuapp.com/signup";
+    let obj = { email, password, username, role };
 
-    let url = "https://tangled-backend.herokuapp.com/signup";
-    let obj = { username, password, lastname };
+    console.log(obj);
     await axios
       .post(url, obj)
       .then((result) => {
         console.log(result.data);
+        console.log('here is the status',);
+        if (result.status === 201){
+          Swal.fire({
+            position: 'centered',
+            icon: 'success',
+            title: 'Your Account Created Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          Router.push('/login')
+          
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+    
   };
 
   handleUserInput = (e) => {
     e.preventDefault();
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({ [name]: value }, () => {
+    this.setState({ ...this.state, [name]: value }, () => {
       this.validateField(name, value);
     });
   };
@@ -54,7 +92,7 @@ class Signup extends Component {
         fieldValidationErrors.email = emailValid ? "" : " is invalid";
         break;
       case "password":
-        passwordValid = value.length >= 6;
+        passwordValid = value.length >= 8;
         fieldValidationErrors.password = passwordValid ? "" : " is too short";
         break;
       default:
@@ -82,55 +120,114 @@ class Signup extends Component {
   render() {
     return (
       <>
-       <FormErrors formErrors={this.state.formErrors} />
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="">Username</label>
-        <input
-          type="text"
-          className="form-control"
-          name="name"
-          placeholder="Username"
-        />
+        <FormErrors formErrors={this.state.formErrors} />
+        <When condition={!this.context.loggedIn}>
+          <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
+            <Flex p={8} flex={1} align={"center"} justify={"center"}>
+              <Stack spacing={4} w={"full"} maxW={"md"}>
+                <Heading fontSize={"2xl"}>Create your account</Heading>
+                <FormControl id="name">
+                  <FormLabel>Username</FormLabel>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="name"
+                    placeholder="Username"
+                    value={this.state.name}
+                    onChange={this.handleUserInput}
+                  />
+                </FormControl>
 
-        <div
-          className={`form-group ${this.errorClass(
-            this.state.formErrors.email
-          )}`}
-        >
-          <label htmlFor="email">Email address</label>
-          <input
-            type="email"
-            required
-            className="form-control"
-            name="email"
-            placeholder="Email"
-            value={this.state.email}
-            onChange={this.handleUserInput}
-          />
-        </div>
-        <div
-          className={`form-group ${this.errorClass(
-            this.state.formErrors.password
-          )}`}
-        >
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="form-control"
-            name="password"
-            placeholder="Password"
-            value={this.state.password}
-            onChange={this.handleUserInput}
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={!this.state.formValid}
-        >
-          Sign up
-        </button>
-      </form>
+                <div
+                  className={`form-group ${this.errorClass(
+                    this.state.formErrors.email
+                  )}`}
+                >
+                  <FormControl id="email">
+                    <FormLabel>Email address</FormLabel>
+                    <Input
+                      type="email"
+                      required
+                      className="form-control"
+                      name="email"
+                      placeholder="Email"
+                      value={this.state.email}
+                      onChange={this.handleUserInput}
+                    />
+                  </FormControl>
+                </div>
+                <div
+                  className={`form-group ${this.errorClass(
+                    this.state.formErrors.password
+                  )}`}
+                >
+                  <FormControl id="password">
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      type="password"
+                      className="form-control"
+                      name="password"
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChange={this.handleUserInput}
+                    />
+                  </FormControl>
+                </div>
+                {/* <Auth capabilities={'delete'}> */}
+                <Stack spacing={6}>
+                  <FormControl id="role">
+                    <FormLabel>Role</FormLabel>
+                    <Select
+                      name="role"
+                      placeholder="Select the your role"
+                      onChange={this.handleUserInput}
+                      value={this.state.role}
+                    >
+                      <option value="manager">manager</option>
+                      <option value="employee">employee</option>
+                      <option value="client">client</option>
+                    </Select>
+                  </FormControl>
+                </Stack>
+                {/* </Auth> */}
+                <Stack spacing={6}>
+                  <Stack
+                    direction={{ base: "column", sm: "row" }}
+                    align={"start"}
+                    justify={"space-between"}
+                  >
+                    <Checkbox>Remember me</Checkbox>
+                    <Box>
+               
+                  <Link color="teal.500" href="/login">
+                    Login
+                  </Link>
+                </Box>
+                    <Link color={"blue.500"}>Forgot password?</Link>
+                  </Stack>
+                  <Button
+                    colorScheme={"blue"}
+                    variant={"solid"}
+                    onClick={this.handleSubmit}
+                    type="submit"
+                    disabled={!this.state.formValid}
+                  >
+                    Sign up
+                  </Button>
+                </Stack>
+              </Stack>
+            </Flex>
+            <Flex flex={1}>
+              <Image
+                alt={"Login Image"}
+                objectFit={"cover"}
+                src={
+                  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
+                }
+              />
+            </Flex>
+          </Stack>
+        </When>
       </>
     );
   }
