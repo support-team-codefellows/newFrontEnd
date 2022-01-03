@@ -46,9 +46,9 @@ function Telephone({ newData }) {
   });
 
   const [data, setdata] = useState(null);
-  const [telephoneData, setTelephoneData] = useState([]);
-  const [newTickets, setNewTickets] = useState([]);
-  const [processedTickets, setProcessedTickets] = useState([]);
+  const [telephoneData, setTelephoneData] = useState([]); //total
+  const [newTickets, setNewTickets] = useState([]); //new
+  const [processedTickets, setProcessedTickets] = useState([]); //procceced
   const { isOpen, onOpen, onClose } = useDisclosure();
   const SelectorData = useSelector((state) => state.newData);
   const [unprocessedFlag, setUnprocessedFlag] = useState(true);
