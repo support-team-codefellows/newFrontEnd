@@ -3,6 +3,9 @@ import { When } from "react-if";
 import superagent from "superagent";
 import { LoginContext } from "../components/auth/context";
 import base64 from "base-64";
+import Router from 'next/router';
+
+import Swal from 'sweetalert2';
 import {
   Button,
   chakra,
@@ -35,6 +38,7 @@ class Login extends React.Component {
   };
   handleSubmit = async (e) => {
     e.preventDefault();
+    // let API = "https://project401.herokuapp.com";
     let API = "https://project401.herokuapp.com";
     console.log(this.state.email, this.state.password);
     const response = await superagent
@@ -42,11 +46,22 @@ class Login extends React.Component {
       .set(
         "authorization",
         `Basic ${base64.encode(`${this.state.email}:${this.state.password}`)}`
-      );
+      )
+    console.log('this is the response ', response.status);
     if (response.status === 200) {
+      Swal.fire({
+        position: 'centered',
+        icon: 'success',
+        title: 'You Logged in successfully',
+        showConfirmButton: false,
+        timer: 1500
+      })
       this.context.login(this.state.email, this.state.password, response.body);
       console.log(response.body, "response");
+
     }
+    Router.push('/')
+
   };
   handleShowClick = () =>
     this.setState({ showPassword: !this.state.showPassword });
@@ -54,11 +69,11 @@ class Login extends React.Component {
   render() {
     return (
       <>
-        <When condition={this.context.loggedIn}>
+        {/* <When condition={this.context.loggedIn}>
           <Button className="btn btn-primary" onClick={this.context.logout}>
             Log Out
           </Button>
-        </When>
+        </When> */}
         <When condition={!this.context.loggedIn}>
           <Flex
             flexDirection="column"
@@ -90,23 +105,20 @@ class Login extends React.Component {
                       />
                     </FormControl>
                     <FormLabel>Password</FormLabel>
-                    <Input
-                      type={this.state.showPassword ? "text" : "password"}
-                      placeholder="password"
-                      name="password"
-                      onChange={this.handleChange}
-                    />
-                 
-                      <Button
-                        h="1.75rem"
-                        size="sm"
-                        onClick={this.handleShowClick}
-                      >
-                        {this.state.showPassword ? "Hide" : "Show"}
-                      </Button>
-                   
-                  
+                    <InputGroup size='md'>
 
+                      <Input
+                        type={this.state.showPassword ? "text" : "password"}
+                        placeholder="password"
+                        name="password"
+                        onChange={this.handleChange}
+                      />
+                      <InputRightElement width='4.5rem'>
+                        <Button h='1.75rem' size='sm' onClick={this.handleShowClick}>
+                          {this.state.showPassword ? 'Hide' : 'Show'}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
                     <Button
                       type="submit"
                       colorScheme="gray"

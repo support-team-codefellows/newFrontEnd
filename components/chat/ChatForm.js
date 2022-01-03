@@ -2,18 +2,21 @@
 import io from "socket.io-client";
 import { useState } from "react";
 import Chat from "./Chat";
+import { Redirect } from "react-router-dom";
 import { Button, Input, Stack, Flex, Box } from "@chakra-ui/react";
 import { LoginContext } from "../auth/context";
+import Router from 'next/router';
 import { useContext, useEffect } from "react";
+import { If, Else } from 'react-if';
 const socket = io.connect("https://project401.herokuapp.com/");
 function chatFrom() {
-  const Constext = useContext(LoginContext);
+  const Context = useContext(LoginContext);
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   useEffect(() => {
-    setUsername(Constext?.user?.username);
-  }, [Constext.user.username]);
+    setUsername(Context?.user?.username);
+  }, [Context.user.username]);
   const joinRoom = () => {
     if (username !== "" && room !== "") {
       socket.emit("joinRoom", room);
@@ -22,6 +25,8 @@ function chatFrom() {
   };
 
   return (
+    <>
+    <If condition = {Context.loggedIn}>
     <Flex
       className="App"
       flexDir="Column"
@@ -64,6 +69,10 @@ function chatFrom() {
         </Box>
       )}
     </Flex>
+    </If>
+    <Else> 
+    </Else>
+    </>
   );
 }
 
