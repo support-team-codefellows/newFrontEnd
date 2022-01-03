@@ -3,8 +3,12 @@ import { FormErrors } from "..//components//auth///errorForm";
 import axios from "axios";
 import { When } from "react-if";
 import { LoginContext } from "..//components//auth///context";
+import Swal from 'sweetalert2';
 import Auth from "..//components//auth///auth";
+import Router from 'next/router';
+
 import {
+  Box,
   Button,
   Checkbox,
   Flex,
@@ -40,7 +44,7 @@ class Signup extends Component {
     let username = this.state.name;
     let role = this.state.role;
     console.log(role);
-
+//https://project401.herokuapp.com/signup
     let url = "https://project401.herokuapp.com/signup";
     let obj = { email, password, username, role };
 
@@ -49,10 +53,23 @@ class Signup extends Component {
       .post(url, obj)
       .then((result) => {
         console.log(result.data);
+        console.log('here is the status',);
+        if (result.status === 201){
+          Swal.fire({
+            position: 'centered',
+            icon: 'success',
+            title: 'Your Account Created Successfully',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          Router.push('/login')
+          
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+    
   };
 
   handleUserInput = (e) => {
@@ -156,13 +173,13 @@ class Signup extends Component {
                     />
                   </FormControl>
                 </div>
-                <Auth capabilities={'delete'}>
+                {/* <Auth capabilities={'delete'}> */}
                 <Stack spacing={6}>
                   <FormControl id="role">
                     <FormLabel>Role</FormLabel>
                     <Select
                       name="role"
-                      placeholder="Select the seginees role"
+                      placeholder="Select the your role"
                       onChange={this.handleUserInput}
                       value={this.state.role}
                     >
@@ -172,7 +189,7 @@ class Signup extends Component {
                     </Select>
                   </FormControl>
                 </Stack>
-                </Auth>
+                {/* </Auth> */}
                 <Stack spacing={6}>
                   <Stack
                     direction={{ base: "column", sm: "row" }}
@@ -180,6 +197,12 @@ class Signup extends Component {
                     justify={"space-between"}
                   >
                     <Checkbox>Remember me</Checkbox>
+                    <Box>
+               
+                  <Link color="teal.500" href="/login">
+                    Login
+                  </Link>
+                </Box>
                     <Link color={"blue.500"}>Forgot password?</Link>
                   </Stack>
                   <Button
