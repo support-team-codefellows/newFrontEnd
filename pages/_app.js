@@ -6,7 +6,8 @@ import { Flex } from "@chakra-ui/react";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import reducer from "..//redux//reduces";
-import chatformCss from  "../components/chat/Chatform.css"
+import chatformCss from  "../components/chat/Chatform.css";
+import '../components/border.css';
 import {
   createStateSyncMiddleware,
   initStateWithPrevTab,

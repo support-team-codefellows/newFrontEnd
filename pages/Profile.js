@@ -1,6 +1,7 @@
 import { LoginContext } from "../components/auth/context";
 import { FcApproval, FcSettings, FcPortraitMode } from "react-icons/fc";
 import { BsGenderMale } from "react-icons/bs";
+//  TODO get the pending tickets And solved Tickets check the imgage before clicking on the profile page 
 import {
     Button,
     List,
@@ -77,7 +78,8 @@ class Profile extends Component {
                                     <ListIcon as={FcApproval} color='green.500' />
                                 </List>
                             </Text>
-                            <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Capabilities: {this.context.user.capabilities.map(e => {
+
+                            <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Capabilities: {this.context.user.capabilities?.map(e => {
                                 return <Badge colorScheme='green'>{e}</Badge>
                             })}
                             </Text>
@@ -113,3 +115,4 @@ class Profile extends Component {
 }
 
 export default Profile;
+    

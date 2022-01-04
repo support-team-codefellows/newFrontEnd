@@ -151,7 +151,6 @@ class Signup extends Component {
                     onChange={this.handleUserInput}
                   />
                 </FormControl>
-
                 <div
                   className={`form-group ${this.errorClass(
                     this.state.formErrors.email
@@ -186,7 +185,6 @@ class Signup extends Component {
                       onChange={this.handleUserInput}
                     />
                   </FormControl>
-
                 </div>
                 <FormControl id="fileUpload">
                   <FormLabel>
@@ -198,14 +196,9 @@ class Signup extends Component {
                         name='imageFile'
                         onChange={this.imageUpload}
                       >
-
                       </input>
                       <span class="file-custom"></span>
                     </Button>
-                    <Image src="blob:http://localhost:3000/68d253b0-721e-44f7-aced-5daac2deee58"></Image>
-                    <h1>{this.state.image}</h1>
-
-
                   </FormLabel>
                 </FormControl>
                 {/* <Auth capabilities={'delete'}> */}

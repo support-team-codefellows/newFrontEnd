@@ -1,25 +1,25 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
-import { FiHome, FiPieChart, FiDollarSign, FiBox, FiPhone, FiCalendar, FiUser, FiPlus} from "react-icons/fi";
+import { FiHome, FiPieChart, FiDollarSign, FiBox, FiPhone, FiCalendar, FiUser, FiPlus } from "react-icons/fi";
 import { BsPersonCircle } from "react-icons/bs";
-import {useContext , useEffect , useState} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { If, Then, Else } from 'react-if';
-import { LoginContext } from "./auth/context"; 
+import { LoginContext } from "./auth/context";
 export default function DashboardCol1() {
   const Context = useContext(LoginContext);
-  let [image,setImage] = useState("") ; 
+  let [image, setImage] = useState("");
   useEffect(() => {
 
     if (typeof window !== 'undefined') {
-      let userImage =  localStorage.getItem('fileBase64')
+      let userImage = localStorage.getItem('fileBase64')
       setImage(userImage)
 
     }
   }, [])
 
-  
+
   return (
     <>
-  
+
       {/* Column 1 */}
       <Flex
         w={["100%", "100%", "10%", "15%", "15%"]}
@@ -34,32 +34,27 @@ export default function DashboardCol1() {
           justifyContent="space-between"
         >
           <Flex flexDir="column" as="nav">
-         
-            <Heading
-              mt={50}
-              mb={[25, 50, 100]}
-              fontSize={["4xl", "4xl", "2xl", "3xl", "4xl"]}
-              alignSelf="center"
-              letterSpacing="tight"
-            >
-              Tangeled.
-            </Heading>
+        
+            <div className="logo">
+              <h2 className="texth2"><span className="myyspan"><Heading>Tangled</Heading></span></h2>
+              <div className="blur"></div>
+            </div>
             <Flex
               flexDir={["row", "row", "column", "column", "column"]}
               align={["center", "center", "center", "flex-start", "flex-start"]}
               wrap={["wrap", "wrap", "nowrap", "nowrap", "nowrap"]}
               justifyContent="center"
-            > 
+            >
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiHome} fontSize="2xl" className="active-icon" />
                 </Link>
-      
+
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href="/"
-                  >
+                >
                   <Text className="active">Home</Text>
                 </Link>
               </Flex>
@@ -75,9 +70,7 @@ export default function DashboardCol1() {
                 >
                   <Text>Profile</Text>
                 </Link>
-   
               </Flex>
-        
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPhone} fontSize="2xl" />
@@ -90,7 +83,7 @@ export default function DashboardCol1() {
                 >
                   <Text>Telephone</Text>
                 </Link>
-   
+
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
@@ -100,67 +93,60 @@ export default function DashboardCol1() {
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/site'
-                  >
+                >
                   <Text>On-Site</Text>
                 </Link>
               </Flex>
-        
+
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPlus} fontSize="2xl" />
                 </Link>
-              
-              <Link
+
+                <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/customer'
-
                 >
                   <Text>Tickets</Text>
                 </Link>
-    
-               
               </Flex>
-    
-                    <If condition= {!Context.loggedIn}>
-
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiUser} fontSize="2xl" />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/login'
-
-
-                >
-                  <Text>Login</Text>
-
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/FAQ'
+              <If condition={!Context.loggedIn}>
+                <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                  <Link display={["none", "none", "flex", "flex", "flex"]}>
+                    <Icon as={FiUser} fontSize="2xl" />
+                  </Link>
+                  <Link
+                    _hover={{ textDecor: "none" }}
+                    display={["flex", "flex", "none", "flex", "flex"]}
+                    href='/login'
                   >
-                  <Text>FAQ</Text>
-                </Link>
-              </Flex>
-                  </If>
-                  <If condition= {Context.loggedIn}>
-                  <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiBox} fontSize="2xl" />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/login'
+                    <Text>Login</Text>
+
+                  </Link>
+                  <Link
+                    _hover={{ textDecor: "none" }}
+                    display={["flex", "flex", "none", "flex", "flex"]}
+                    href='/FAQ'
                   >
-                  <Text><button onClick={Context.logout}>LogOut</button></Text>
-                </Link>
+                    <Text>FAQ</Text>
+                  </Link>
                 </Flex>
-                  </If>
+              </If>
+              <If condition={Context.loggedIn}>
+                <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                  <Link display={["none", "none", "flex", "flex", "flex"]}>
+                    <Icon as={FiBox} fontSize="2xl" />
+                  </Link>
+                  <Link
+                    _hover={{ textDecor: "none" }}
+                    display={["flex", "flex", "none", "flex", "flex"]}
+                    href='/login'
+                  >
+                    <Text><button onClick={Context.logout}>LogOut</button></Text>
+                  </Link>
+                </Flex>
+              </If>
             </Flex>
           </Flex>
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
