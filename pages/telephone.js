@@ -32,8 +32,10 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  Textarea
+  Textarea,
+  IconButton
 } from "@chakra-ui/react";
+import { DeleteIcon } from '@chakra-ui/icons';
 import { LoginContext } from "../components/auth/context";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -421,9 +423,9 @@ function Telephone({ newData }) {
                               </Flex>
                             </Td>
                             <Td>
-                              <Button onClick={() => handleDelete(item)}>
-                                delete
-                              </Button>
+                              <IconButton onClick={() => handleDelete(item)}>
+                                <DeleteIcon />
+                              </IconButton>
                             </Td>
                           </Tr>
                         </>

@@ -28,15 +28,7 @@ export default function Home() {
   return (
     <>
 
-      <ReactStars
-        count={5}
-        onChange={ratingChanged}
-        size={24}
-        color2={"#ffd700"}
-      />
-      <If condition={Context.loggedIn}>
-        
-      </If>
+      
 
 
     </>
