@@ -28,10 +28,13 @@ import { Data } from "../faqData";
 const socket = io.connect("https://project401.herokuapp.com/");
 function chatFrom() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isdata, setisdata] = useState({ query: "" });
-  const [data, setdata] = useState("");
+  const [isdata, setisdata] = useState("");
+  const [data, setdata] = useState({ question: "", answer: "" });
   const Context = useContext(LoginContext);
   const [username, setUsername] = useState("");
+  const [fail, setfail] = useState(
+    "Sorry, we don't have answer for your question, please take the time to chat with us"
+  );
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [showModal, setShowModal] = useState(true);
@@ -39,7 +42,7 @@ function chatFrom() {
     setUsername(Context?.user?.username);
     setShowModal(true);
   }, [Context.user.username]);
-  
+
   const joinRoom = () => {
     setRoom("1");
     if (username !== "" && room !== "") {
@@ -48,16 +51,23 @@ function chatFrom() {
     }
   };
 
+  console.log(isdata);
   const handleSerach = (e) => {
-    Data.filter((item) => {
-      if (item.question.includes(isdata.query)) {
-        setdata(item.answer);
-      } else {
-        setdata(
-          "Sorry, we don't have answer for your question, please take the time to chat with us"
-        );
-      }
+    setdata({ question: "", answer: "" });
+    const question = isdata;
+    const filtered = Data.filter((value) => {
+      return value.question.toLowerCase().includes(question.toLowerCase());
     });
+
+    setisdata("");
+
+    if (filtered.length === 0 || filtered === false || question === "") {
+      setfail(
+        "Sorry, we don't have answer for your question, please take the time to chat with us"
+      );
+    } else {
+      setdata({ question: filtered[0].question, answer: filtered[0].answer });
+    }
   };
 
   return (
@@ -72,9 +82,8 @@ function chatFrom() {
           {showModal ? (
             <>
               <Input
-                placeholder="Search"
-                onChange={(e) => setisdata({ query: e.target.value })}
-                value={isdata.query}
+                placeholder="you have a question?"
+                onChange={(e) => setisdata((isdata = e.target.value))}
                 size="lg"
                 width="100%"
                 borderRadius="md"
@@ -84,18 +93,22 @@ function chatFrom() {
                 }}
               />
 
-              <Button
-                colorScheme="blackAlpha"
-                onClick={() => {
-                  handleSerach();
-                  onOpen();
-                }}
-                size="md"
-                bgColor="blackAlpha.900"
-                color="#fff"
-              >
-                Search
-              </Button>
+              {isdata === "" ? (
+                <></>
+              ) : (
+                <Button
+                  colorScheme="blackAlpha"
+                  onClick={() => {
+                    handleSerach();
+                    onOpen();
+                  }}
+                  value={isdata.question}
+                  bgColor="blackAlpha.900"
+                  color="#fff"
+                >
+                  Search
+                </Button>
+              )}
             </>
           ) : (
             <></>
@@ -104,13 +117,13 @@ function chatFrom() {
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>
-                <Text> {isdata.query}?</Text>
+              <ModalHeader width="40vw">
+                <Text> {data.question ? data.question + "?" : ""}</Text>
               </ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 {" "}
-                <Text>{data}</Text>
+                <Text>{data.answer === "" ? fail : data.answer}</Text>
               </ModalBody>
 
               <ModalFooter>
@@ -130,7 +143,6 @@ function chatFrom() {
               w="300px"
               maxW="20vw"
               className="chat-window"
-              bg="#F7F7F7"
               borderRadius="20px"
             >
               <Input
@@ -150,6 +162,8 @@ function chatFrom() {
                 }}
               /> */}
               <Button
+                mr={3}
+                colorScheme="blackAlpha"
                 onClick={() => {
                   joinRoom();
                   setShowModal(false);

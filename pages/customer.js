@@ -132,11 +132,17 @@ function Customer() {
     dispatch({
       type: "RATING",
       payload: {
-        reating: newRating,
+        rating: newRating,
         username: item.username,
       },
     });
+
+    axios.post(
+      "https://test-401.herokuapp.com/rate",
+      rate
+    );
     setRate({ reating: newRating, username: item.username });
+
   };
 
   return (
