@@ -17,26 +17,24 @@ import {
   Spacer,
   PopoverAnchor,
 } from '@chakra-ui/react'
-import React, { useEffect } from "react";
+import axios from "axios";
+
+
+import React, { useEffect ,useState} from "react";
 import ChatFrom from "../components/chat/ChatForm";
 import { If, Then, Else } from 'react-if';
+import  MyChart from '../components/myChart'
 export default function Home() {
+ 
   const Context = useContext(LoginContext);
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
   return (
     <>
+<MyChart />
+    
 
-      <ReactStars
-        count={5}
-        onChange={ratingChanged}
-        size={24}
-        color2={"#ffd700"}
-      />
-      <If condition={Context.loggedIn}>
-        
-      </If>
 
 
     </>

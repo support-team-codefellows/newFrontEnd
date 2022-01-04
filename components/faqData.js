@@ -1,48 +1,45 @@
+import Link from "next/link";
+ export const link = (<Link href="/" > <p> about</p></Link>);
 export const Data = [
   {
-    question: "What is the difference between a variable and a constant?",
-    answer:
-      "A variable is a container for storing data. A constant is a container for storing data that cannot be changed. A variable can be assigned a value, and a constant cannot be assigned a value.",
+    question: "What Customer Relationship Management (CRM) Platform?",
+    answer: `Tangeld is a Platform to keep track of interactions, data, and notes about customers or potential. The data is stored in a central database and is accessible to multiple people within an organization.
+    and it helps streamline sales, marketing efforts, customer service, accounting, and management for growing companies. Multiple people can access and edit the information about a particular client’s customer journey.`,
   },
   {
-    question: "What is the difference between a function and a method?",
+    question: "How does Tanageld Work?",
     answer:
-      "A function is a reusable block of code that performs a set action. A method is a function that is associated with an object. A function is a reusable block of code that performs a set action. A method is a function that is associated with an object.",
+      "We track the actions of a potential customer through social media, email, and website channels. The system absorbs as much information as possible on leads before guiding them—or helping you guide them—through a planned journey that hits all the hot spots.",
   },
   {
-    question: "What is the difference between a function and a method?",
+    question: "Benefits of Tanageld?",
     answer:
-      "A function is a reusable block of code that performs a set action. A method is a function that is associated with an object. A function is a reusable block of code that performs a set action. A method is a function that is associated with an object.",
+      "The benefits of Tanageld system are available to salespeople, marketing teams, customer support specialists, and anyone who comes in contact with customers and businesses.",
   },
   {
-    question: "What is the difference between a function and a method?",
+    question: "How long does Tanageld take to see value?",
     answer:
-      "A function is a reusable block of code that performs a set action. A method is a function that is associated with an object. A function is a reusable block of code that performs a set action. A method is a function that is associated with an object.",
+      "our platform starts to create value the moment you enter your first lead. For best results, make sure that all leads are processed through your platform.",
   },
   {
-    question: "What is the difference between a function and a method?",
-    answer:
-      "A function is a reusable block of code that performs a set action. A method is a function that is associated with an object. A function is a reusable block of code that performs a set action. A method is a function that is associated with an object.",
-  },
-  {
-    question: "What is the difference between a customer and a user?",
-    answer:
-      "A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
-  },
-  {
-    question: "What is the difference between a customer and a user?",
-    answer:
-      "A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
-  },
-  {
-    question: "What is the difference between a customer and a user?",
-    answer:
-      "A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
-  },
+    question: "Does Tanageld affect large and small businesses differently?",
+    answer: `CRM is your marketing memory however big or small your business. Large businesses use it to collaborate when a global team is assigned to a single customer or deal. They also use CRM to instill discipline in the sales force.
 
+      Smaller businesses often use CRM systems as a data engine for marketing campaigns. The built-in efficiencies and sales journey tracking are often the most valuable aspect for them.`,
+  },
   {
-    question: "What is the difference between a customer and a user?",
+    question: "what's our goal?",
     answer:
-      "A customer is a person who uses our services. A user is a person who is using our services. A customer is not a user. A user is not a customer.",
+      "Our goal is to help you grow your business and make it more efficient. We help you to create a more efficient sales process and help you to create a more efficient marketing process.",
+  },
+  {
+    question: "How do I get started?",
+    answer:
+      " You can get started by signing up for a free account. *You can also sign up for a paid plan if you want to use the system for a longer period of time.",
+  },
+  {
+    question: "Who is working and maintaining Tangeld?",
+    answer:
+       `We are a team of developers, designers who are working and committed to make Tangeld the best CRM system for small and large businesses. We are always looking for new ideas and new ways to improve the system. ` ,
   },
 ];

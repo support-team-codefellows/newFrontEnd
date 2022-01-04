@@ -32,7 +32,7 @@ function Customer() {
   const selector = useSelector((state) => state);
   console.log(selector)
   const [responsesArray, setResponsesArray] = useState([]);
-  const [rate, setRate] = useState({ reating: 0, username: "" });
+  const [rate, setRate] = useState({ rating: 0, username: "" });
   const [inputField, setInputField] = useState({
     customerName: ontext.user.username,
     phoneNumber: "",
@@ -120,11 +120,17 @@ function Customer() {
     dispatch({
       type: "RATING",
       payload: {
-        reating: newRating,
+        rating: newRating,
         username: item.username,
       },
     });
-    setRate({ reating: newRating, username:item.username});
+    setRate({ rating: newRating, username:item.username});
+    
+    axios.post(
+      "https://test-401.herokuapp.com/rate",
+      rate
+    );
+
   
   };
 

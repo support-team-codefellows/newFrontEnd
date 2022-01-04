@@ -196,6 +196,7 @@ a {
 }
 
 .chat-window .chat-footer input {
+  
   height: 100%;
   flex: 85%;
   border: 0;
@@ -220,10 +221,6 @@ a {
   border-radius: 6px;
   color: lightgray;
   border-radius: 6px;
-}
-
-.chat-window .chat-footer button:hover {
-  color: ;
 }
 .hide {
   opacity: 0 !important;
