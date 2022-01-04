@@ -13,26 +13,50 @@ import {
   Box,
   Spacer,
   PopoverAnchor,
-} from '@chakra-ui/react'
+  IconButton,
+  Tooltip,
+} from "@chakra-ui/react";
+
 import ChatFrom from "./chat/ChatForm";
 export default function ChatIcon() {
-
-return(<Flex >
-          <Spacer />
-          <Box p='2' bg='' style={{ position:'fixed',right :'10px',bottom :'20px' }}>
-            <Popover placement='top-start'>
-              <PopoverTrigger>
-                <Button  leftIcon={<BsFillChatDotsFill />} textAlign='center'   borderRadius='100px' w='70px'h='70px' ></Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverHeader fontWeight='semibold'>Chat</PopoverHeader>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverBody>
-                  <ChatFrom />
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
-          </Box>
-        </Flex>)
+  return (
+    <Flex>
+      <Spacer />
+      <Box
+        p="2"
+        bg=""
+        style={{ position: "fixed", right: "10px", bottom: "20px" }}
+      >
+        <Popover placement="top-start" borderBlock={'none'}  >
+        
+          <PopoverTrigger borderBlock={'none'}>
+            {/* <Tooltip label="Looking for something?" fontSize="md"> */}
+              {/* <Button> */}
+                <IconButton
+                
+                  textAlign="center"
+                  borderRadius="100px"
+                  w="70px"
+                  h="70px"
+                  icon={<BsFillChatDotsFill />}
+                  _hover={{ transform: "scale(1.5)" }}
+                />
+              {/* </Button> */}
+            {/* </Tooltip> */}
+            {/* <Button   ></Button> */}
+ 
+          </PopoverTrigger>
+          <PopoverContent background={'transparent'} borderBlock={'none'}    >
+            <PopoverHeader fontWeight="semibold">Chat</PopoverHeader>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverBody borderBlock={'none'} background={'transparent'}>
+              <ChatFrom />
+            </PopoverBody>
+          </PopoverContent>
+         
+        </Popover>
+      </Box>
+    </Flex>
+  );
 }

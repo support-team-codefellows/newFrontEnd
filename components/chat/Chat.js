@@ -41,14 +41,15 @@ function Chat({ socket, username, room }) {
 
   return (
     <Stack
-      h="40vh"
+      h="100%"
       w="300px"
       maxW="20vw"
       className="chat-window"
-      bg="#F7F7F7"
+      // bg="#F7F7F7"
       borderRadius="20px"
+      
     >
-      <Heading></Heading>
+  
       <Stack overflow="auto" className="chat-body">
         {/* <ScrollToBottom className="message-container"> */}
         {messageList.map((messageContent, i) => {
@@ -75,6 +76,11 @@ function Chat({ socket, username, room }) {
       <Box>
         <Flex>
           <Input
+          pointerEvents={username === "" ? "none" : "auto"}
+          marginLeft='auto'
+          borderRadius="20px"
+          position="relative"
+          marginTop='210px'
             type="text"
             value={currentMessage}
             placeholder="How can we Help"
@@ -85,7 +91,9 @@ function Chat({ socket, username, room }) {
               event.key === "Enter" && sendMessage();
             }}
           />
-          <Button onClick={sendMessage}>&#9658;</Button>
+          <Button  position="relative"
+          marginTop='210px'
+            type="text"  onClick={sendMessage}>&#9658;</Button>
         </Flex>
       </Box>
     </Stack>

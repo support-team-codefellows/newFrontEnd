@@ -1,7 +1,7 @@
 const inisialState = {
   newData: false,
   onSite: false,
-  rateing: { reating: "", username: "" },
+  rateing : {  rating: "", username: ""}
 };
 
 export default function reducer(state = inisialState, action) {

@@ -15,9 +15,11 @@ import ChatFrom from "../components/chat/ChatForm";
 import { If, Then, Else } from "react-if";
 
 export default function Home() {
+ 
   const Context = useContext(LoginContext);
   return (
     <>
+
       <Flex
         w={["100%", "100%", "90%", "90%", "85%"]}
         p="3%"
