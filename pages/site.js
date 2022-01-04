@@ -32,7 +32,10 @@ import {
   Stat,
   StatLabel,
   StatNumber,
+  IconButton
 } from "@chakra-ui/react";
+import { DeleteIcon } from '@chakra-ui/icons'
+
 import { LoginContext } from "../components/auth/context";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -357,8 +360,8 @@ function Site({ onSite }) {
                 />
               </FormControl>
               <FormControl>
-                <FormLabel>Appointment Details</FormLabel>
-                <Input type="date" name="date" onChange={inputsHandler2} />
+                <FormLabel  marginTop={"2vh"}>Appointment Details</FormLabel>
+                <Input type="date" name="date" onChange={inputsHandler2} marginBottom={"1vh"}/>
                 <Input
                   type="time"
                   name="time"
@@ -378,10 +381,11 @@ function Site({ onSite }) {
                 size="md"
                 bgColor="blackAlpha.900"
                 color="#fff"
+                marginRight={"1vw"}
               >
                 Submit
               </Button>
-              <Button colorScheme="blackAlpha" mr={3} onClick={onClose}>
+              <Button mr={3} onClick={onClose}>
                 Close
               </Button>
             </ModalFooter>
@@ -436,9 +440,9 @@ function Site({ onSite }) {
                               </Flex>
                             </Td>
                             <Td>
-                              <Button onClick={() => handleDelete(item)}>
-                                delete
-                              </Button>
+                              <IconButton onClick={() => handleDelete(item)}>
+                                <DeleteIcon />
+                              </IconButton>
                             </Td>
                           </Tr>
                         </>

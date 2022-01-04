@@ -1,14 +1,32 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
-import { FiHome, FiPieChart, FiDollarSign, FiBox, FiPhone, FiCalendar, FiUser, FiPlus } from "react-icons/fi";
-import {useContext} from 'react';
-import { If, Then, Else } from 'react-if';
-import { LoginContext } from "./auth/context"; 
+import {
+  FiHome,
+  FiBox,
+  FiPhone,
+  FiCalendar,
+  FiUser,
+  FiPlus,
+} from "react-icons/fi";
+import { RiQuestionLine, RiLoginCircleLine, RiLogoutCircleLine } from "react-icons/ri";
+import { useState, useEffect, useContext } from "react";
+import { If, Then, Else } from "react-if";
+import { LoginContext } from "./auth/context";
 export default function DashboardCol1() {
   const Context = useContext(LoginContext);
-  console.log('ssss',Context);
-  return (
+  const [activeLink, setActiveLink] = useState(1);
+  useEffect(()=>{
+    if(typeof window !== "undefined"){
+      setActiveLink(JSON.parse(localStorage.getItem('activePage')) || 1);
+    }
+  }, []);
+  useEffect(()=>{
+      if(typeof window !== "undefined"){
+        localStorage.setItem('activePage', JSON.stringify(activeLink));
+      }
+    }, [activeLink]);
+    
+    return (
     <>
-  
       {/* Column 1 */}
       <Flex
         w={["100%", "100%", "10%", "15%", "15%"]}
@@ -23,22 +41,20 @@ export default function DashboardCol1() {
           justifyContent="space-between"
         >
           <Flex flexDir="column" as="nav">
-          <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/"
-                  >
-  
-            <Heading
-              mt={50}
-              mb={[25, 50, 100]}
-              fontSize={["4xl", "4xl", "2xl", "3xl", "4xl"]}
-              alignSelf="center"
-              letterSpacing="tight"
+            <Link
+              _hover={{ textDecor: "none" }}
+              display={["flex", "flex", "none", "flex", "flex"]}
+              href="/"
             >
-              Tangeled.
-            </Heading>
-
+              <Heading
+                mt={50}
+                mb={[25, 50, 50]}
+                fontSize={["4xl", "4xl", "2xl", "3xl", "4xl"]}
+                alignSelf="center"
+                letterSpacing="tight"
+              >
+                Tangeled.
+              </Heading>
             </Link>
             <Flex
               flexDir={["row", "row", "column", "column", "column"]}
@@ -46,111 +62,102 @@ export default function DashboardCol1() {
               wrap={["wrap", "wrap", "nowrap", "nowrap", "nowrap"]}
               justifyContent="center"
             >
-              
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiHome} fontSize="2xl" className="active-icon" />
+                  <Icon as={FiHome} fontSize="2xl" onClick={() => setActiveLink(1)} className={`${activeLink === 1 ? 'active-icon' : ''}`}/>
                 </Link>
-      
+
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href="/"
-                  >
-                  <Text className="active">Home</Text>
+                >
+                  <Text onClick={() => setActiveLink(1)} className={`${activeLink === 1 ? 'active' : ''}`}>Home</Text>
                 </Link>
               </Flex>
-               
-          
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiPhone} fontSize="2xl" />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/telephone'
 
-                >
-                  <Text>Telephone</Text>
-                </Link>
-   
-              </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiCalendar} fontSize="2xl" />
+                  <Icon as={FiPhone} fontSize="2xl" onClick={() => setActiveLink(2)} className={`${activeLink === 2 ? 'active-icon' : ''}`}/>
                 </Link>
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/site'
+                  href="/telephone"
                 >
-                  <Text>On-Site</Text>
+                  <Text onClick={() => setActiveLink(2)} className={`${activeLink === 2 ? 'active' : ''}`}>Telephone</Text>
                 </Link>
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiPlus} fontSize="2xl" />
+                  <Icon as={FiCalendar} fontSize="2xl" onClick={() => setActiveLink(3)} className={`${activeLink === 3 ? 'active-icon' : ''}`}/>
                 </Link>
-              
-              <Link
+                <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/customer'
-
+                  href="/site"
                 >
-                  <Text>Tickets</Text>
+                  <Text onClick={() => setActiveLink(3)} className={`${activeLink === 3 ? 'active' : ''}`}>On-Site</Text>
                 </Link>
-    
-               
               </Flex>
-               
-            
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiUser} fontSize="2xl" />
+                  <Icon as={FiPlus} fontSize="2xl" onClick={() => setActiveLink(4)} className={`${activeLink === 4 ? 'active-icon' : ''}`}/>
                 </Link>
+
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/login'
-
-
+                  href="/customer"
                 >
-                  <Text>Login</Text>
-
+                  <Text onClick={() => setActiveLink(4)} className={`${activeLink === 4 ? 'active' : ''}`}>Tickets</Text>
                 </Link>
-                </Flex>
-                <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/FAQ'
-                  >
-                   <Icon as={FiUser} fontSize="2xl" />
-                  <Text>FAQ</Text>
-                </Link>
-
               </Flex>
-               
-                
-                  <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={FiBox} fontSize="2xl" />
+                  <Icon as={RiLoginCircleLine} fontSize="2xl" onClick={() => setActiveLink(5)} className={`${activeLink === 5 ? 'active-icon' : ''}`}/>
                 </Link>
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
-                  href='/login'
-                  >
-                  <Text><button onClick={Context.logout}>LogOut</button></Text>
+                  href="/login"
+                >
+                  <Text onClick={() => setActiveLink(5)} className={`${activeLink === 5 ? 'active' : ''}`}>Login</Text>
                 </Link>
-                </Flex>
-               
+              </Flex>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href="/FAQ"
+                >
+                  <Icon as={RiQuestionLine} fontSize="2xl" onClick={() => setActiveLink(6)} className={`${activeLink === 6 ? 'active-icon' : ''}`}/>
+                  <Text onClick={() => setActiveLink(6)} className={`${activeLink === 6 ? 'active' : ''}`}>FAQ</Text>
+                </Link>
+              </Flex>
+
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link display={["none", "none", "flex", "flex", "flex"]}>
+                  <Icon as={RiLogoutCircleLine} fontSize="2xl" onClick={() => setActiveLink(7)} className={`${activeLink === 7 ? 'active-icon' : ''}`}/>
+                </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href="/login"
+                >
+                  <Text onClick={() => setActiveLink(7)} className={`${activeLink === 7 ? 'active' : ''}`}>
+                    <button onClick={Context.logout}>LogOut</button>
+                  </Text>
+                </Link>
+              </Flex>
             </Flex>
           </Flex>
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
-            <Avatar my={2} src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" />
+            <Avatar
+              my={2}
+              src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png"
+            />
             <Text textAlign="center">{Context.user.username}</Text>
           </Flex>
         </Flex>
