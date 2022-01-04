@@ -40,6 +40,7 @@ function MyApp({ Component, pageProps }) {
         </ChakraProvider>
       </LoginContext>
     </Provider>
+ 
   );
 }
 

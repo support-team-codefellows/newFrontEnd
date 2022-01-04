@@ -1,11 +1,22 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
-import { FiHome, FiPieChart, FiDollarSign, FiBox, FiPhone, FiCalendar, FiUser, FiPlus } from "react-icons/fi";
-import {useContext} from 'react';
+import { FiHome, FiPieChart, FiDollarSign, FiBox, FiPhone, FiCalendar, FiUser, FiPlus} from "react-icons/fi";
+import { BsPersonCircle } from "react-icons/bs";
+import {useContext , useEffect , useState} from 'react';
 import { If, Then, Else } from 'react-if';
 import { LoginContext } from "./auth/context"; 
 export default function DashboardCol1() {
   const Context = useContext(LoginContext);
-  console.log('ssss',Context);
+  let [image,setImage] = useState("") ; 
+  useEffect(() => {
+
+    if (typeof window !== 'undefined') {
+      let userImage =  localStorage.getItem('fileBase64')
+      setImage(userImage)
+
+    }
+  }, [])
+
+  
   return (
     <>
   
@@ -38,8 +49,7 @@ export default function DashboardCol1() {
               align={["center", "center", "center", "flex-start", "flex-start"]}
               wrap={["wrap", "wrap", "nowrap", "nowrap", "nowrap"]}
               justifyContent="center"
-            >
-                <If condition= {Context.loggedIn}>
+            > 
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiHome} fontSize="2xl" className="active-icon" />
@@ -53,8 +63,21 @@ export default function DashboardCol1() {
                   <Text className="active">Home</Text>
                 </Link>
               </Flex>
-                  </If>
-          <If condition= {Context.loggedIn}>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link display={["none", "none", "flex", "flex", "flex"]}>
+                  <Icon as={BsPersonCircle} fontSize="2xl" />
+                </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/Profile'
+
+                >
+                  <Text>Profile</Text>
+                </Link>
+   
+              </Flex>
+        
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPhone} fontSize="2xl" />
@@ -77,10 +100,11 @@ export default function DashboardCol1() {
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/site'
-                >
+                  >
                   <Text>On-Site</Text>
                 </Link>
               </Flex>
+        
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPlus} fontSize="2xl" />
@@ -97,7 +121,7 @@ export default function DashboardCol1() {
     
                
               </Flex>
-                    </If>  
+    
                     <If condition= {!Context.loggedIn}>
 
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
@@ -140,7 +164,7 @@ export default function DashboardCol1() {
             </Flex>
           </Flex>
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
-            <Avatar my={2} src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" />
+            <Avatar my={2} src={image} />
             <Text textAlign="center">{Context.user.username}</Text>
           </Flex>
         </Flex>

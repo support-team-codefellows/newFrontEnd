@@ -6,6 +6,7 @@ import { LoginContext } from "..//components//auth///context";
 import Swal from 'sweetalert2';
 import Auth from "..//components//auth///auth";
 import Router from 'next/router';
+import Profile from './Profile';
 
 import {
   Box,
@@ -35,18 +36,31 @@ class Signup extends Component {
       formValid: false,
       name: "",
       role: "",
+      image: ""
     };
   }
+
+  imageUpload = (e) => {
+    const file = e.target.files[0];
+    getBase64(file).then(base64 => {
+      localStorage["fileBase64"] = base64;
+      console.debug("file stored",base64);
+    });
+};
+
   handleSubmit = async (e) => {
+    console.log();
     e.preventDefault();
     let email = this.state.email;
     let password = this.state.password;
     let username = this.state.name;
     let role = this.state.role;
     console.log(role);
-//https://project401.herokuapp.com/signup
+    //https://project401.herokuapp.com/signup
     let url = "https://project401.herokuapp.com/signup";
     let obj = { email, password, username, role };
+    window.localStorage.setItem('image', JSON.stringify(this.state.image));
+    window.localStorage.setItem('test', this.state.image);
 
     console.log(obj);
     await axios
@@ -54,7 +68,7 @@ class Signup extends Component {
       .then((result) => {
         console.log(result.data);
         console.log('here is the status',);
-        if (result.status === 201){
+        if (result.status === 201) {
           Swal.fire({
             position: 'centered',
             icon: 'success',
@@ -63,13 +77,13 @@ class Signup extends Component {
             timer: 1500
           })
           Router.push('/login')
-          
+
         }
       })
       .catch((err) => {
         console.log(err);
       });
-    
+
   };
 
   handleUserInput = (e) => {
@@ -172,7 +186,28 @@ class Signup extends Component {
                       onChange={this.handleUserInput}
                     />
                   </FormControl>
+
                 </div>
+                <FormControl id="fileUpload">
+                  <FormLabel>
+                    <Button colorScheme='teal' variant='outline'>
+                      <input
+                        type="file"
+                        aria-label="File browser example"
+                        id="imageFile" 
+                        name='imageFile'
+                        onChange={this.imageUpload}
+                      >
+
+                      </input>
+                      <span class="file-custom"></span>
+                    </Button>
+                    <Image src="blob:http://localhost:3000/68d253b0-721e-44f7-aced-5daac2deee58"></Image>
+                    <h1>{this.state.image}</h1>
+
+
+                  </FormLabel>
+                </FormControl>
                 {/* <Auth capabilities={'delete'}> */}
                 <Stack spacing={6}>
                   <FormControl id="role">
@@ -198,11 +233,11 @@ class Signup extends Component {
                   >
                     <Checkbox>Remember me</Checkbox>
                     <Box>
-               
-                  <Link color="teal.500" href="/login">
-                    Login
-                  </Link>
-                </Box>
+
+                      <Link color="teal.500" href="/login">
+                        Login
+                      </Link>
+                    </Box>
                     <Link color={"blue.500"}>Forgot password?</Link>
                   </Stack>
                   <Button
@@ -231,5 +266,13 @@ class Signup extends Component {
       </>
     );
   }
+}
+const getBase64 = (file) => {
+  return new Promise((resolve,reject) => {
+     const reader = new FileReader();
+     reader.onload = () => resolve(reader.result);
+     reader.onerror = error => reject(error);
+     reader.readAsDataURL(file);
+  });
 }
 export default Signup;
