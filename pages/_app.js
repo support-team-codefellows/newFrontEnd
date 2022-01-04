@@ -7,7 +7,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import reducer from "..//redux//reduces";
 import ChatIcon from "../components/Chaticon";
-import chatformCss from "../components/chat/Chatform.css";
+import chatformCss from  "../components/chat/Chatform.css";
+import '../components/border.css';
 import {
   createStateSyncMiddleware,
   initStateWithPrevTab,
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps }) {
         </ChakraProvider>
       </LoginContext>
     </Provider>
+ 
   );
 }
 

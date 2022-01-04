@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import ReactStars from "react-stars";
 import { useDispatch } from "react-redux";
+// import { AlertIcon } from '@chakra-ui/icons'
 import { newDataTelephone, newDataOnSite } from "../redux/actions";
 import { useSelector } from "react-redux";
 import useInterval from "../components/hooks/useInterval";
@@ -20,7 +21,13 @@ import {
   Stat,
   StatLabel,
   Box,
-  Textarea
+  Textarea,
+  SimpleGrid,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton,
 } from "@chakra-ui/react";
 import { LoginContext } from "../components/auth/context";
 import Auth from "../components/auth/auth";
@@ -30,9 +37,10 @@ function Customer() {
   console.log(ontext);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
-  console.log(selector)
+  console.log(selector);
   const [responsesArray, setResponsesArray] = useState([]);
-  const [rate, setRate] = useState({ rating: 0, username: "" });
+  const [sentSuccessfully, setSentSuccessfully] = useState(false);
+  const [rate, setRate] = useState({ reating: 0, username: "" });
   const [inputField, setInputField] = useState({
     customerName: ontext.user.username,
     phoneNumber: "",
@@ -74,7 +82,7 @@ function Customer() {
     );
     let receivedResponses = [
       ...responses.data.filter((item) => item.customerName === "marwan"),
-      ...responses2.data.filter((item) => item.customerName === "marwan")
+      ...responses2.data.filter((item) => item.customerName === "marwan"),
     ];
     if (receivedResponses?.length !== responsesArray?.length) {
       console.log(">> the customer has received new responses");
@@ -114,6 +122,10 @@ function Customer() {
       console.log("selector for onsite", selector.onSite);
     }
     console.log("inputField", inputField);
+    setSentSuccessfully(true);
+    setTimeout(() => {
+      setSentSuccessfully(false);
+    }, 3000);
   };
 
   const ratingChanged = (newRating, item) => {
@@ -124,14 +136,13 @@ function Customer() {
         username: item.username,
       },
     });
-    setRate({ rating: newRating, username:item.username});
-    
+
     axios.post(
       "https://test-401.herokuapp.com/rate",
       rate
     );
+    setRate({ reating: newRating, username: item.username });
 
-  
   };
 
   return (
@@ -199,71 +210,80 @@ function Customer() {
         {/* <Auth capabilities={"delete"}>    </Auth> */}
         <br />
         <br />
-        <Button
+        {!sentSuccessfully ? <Button
           onClick={onSubmit}
           colorScheme="alphaBlack"
           bgColor="blackAlpha.900"
           color="#fff"
           minH="45px"
-        >
+          >
           Submit
-        </Button>
+        </Button> : <Button
+          colorScheme="whatsapp"
+          minH="45px"
+        >
+          Sent Successfully
+        </Button>}
         <>
           <br />
           <Heading as="h2" size="lg" letterSpacing="tight">
             Responses
           </Heading>
           <br />
-          {responsesArray.length && responsesArray.map((item, idx) => (
-            <>
-              <Stat
-                key={idx}
-                px={{ base: 2, md: 4 }}
-                py={"5"}
-                shadow={"xl"}
-                border={"1px solid"}
-                borderColor={("gray.800", "gray.500")}
-                rounded={"lg"}
-              >
-                <Flex justifyContent={"space-between"}>
-                  <Box pl={{ base: 2, md: 4 }}>
-                    {item.department === "OnSite" ? (
-                      <StatLabel fontWeight={"medium"} isTruncated>
-                        <Text fontSize="md" fontWeight="bold">
-                          Response for {item.subject}
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
+            {responsesArray.length &&
+              responsesArray.map((item, idx) => (
+                <>
+                  <Stat
+                    key={idx}
+                    px={{ base: 2, md: 4 }}
+                    py={"5"}
+                    shadow={"xl"}
+                    border={"1px solid"}
+                    borderColor={("gray.800", "gray.500")}
+                    rounded={"lg"}
+                  >
+                    <Flex justifyContent={"space-between"}>
+                      <Box pl={{ base: 2, md: 4 }}>
+                        {item.department === "OnSite" ? (
+                          <StatLabel fontWeight={"medium"} isTruncated>
+                            <Text fontSize="md" fontWeight="bold">
+                              Response for {item.subject}
+                            </Text>
+                            <br />
+                            <b>Date: </b>
+                            {JSON.parse(item.response).date}
+                            <br />
+                            <b>Time: </b>
+                            {JSON.parse(item.response).time}
+                          </StatLabel>
+                        ) : (
+                          <StatLabel fontWeight={"medium"} isTruncated>
+                            <Text fontSize="md" fontWeight="bold">
+                              Response for {item.subject}
+                            </Text>
+                            <br />
+                            {item.response}
+                          </StatLabel>
+                        )}
+                        <br />
+                        <Text fontSize="md">
+                          <b>Rate</b> {item.username}
                         </Text>
-                        <br />
-                        <b>Date: </b>
-                        {JSON.parse(item.response).date}
-                        <br />
-                        <b>Time: </b>
-                        {JSON.parse(item.response).time}
-                      </StatLabel>
-                    ) : (
-                      <StatLabel fontWeight={"medium"} isTruncated>
-                        <Text fontSize="md" fontWeight="bold">
-                          Response for {item.subject}
-                        </Text>
-                        <br />
-                        {item.response}
-                      </StatLabel>
-                    )}
-                    <br />
-                    <Text fontSize="md">
-                      <b>Rate</b> {item.username}
-                    </Text>
-                    <ReactStars
-                      count={5}
-                      onChange={(newRating) => ratingChanged(newRating, item)}
-                      size={24}
-                      color2={"#ffd700"}
-                    />
-                  </Box>
-                </Flex>
-              </Stat>{" "}
-              <br />
-            </>
-          ))}
+                        <ReactStars
+                          count={5}
+                          onChange={(newRating) =>
+                            ratingChanged(newRating, item)
+                          }
+                          size={24}
+                          color2={"#ffd700"}
+                        />
+                      </Box>
+                    </Flex>
+                  </Stat>{" "}
+                </>
+              ))}
+          </SimpleGrid>
         </>
       </Flex>
 
