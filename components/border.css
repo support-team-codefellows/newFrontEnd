@@ -24,9 +24,9 @@
 	width: 120%;
 	height: 200%;
 	background: linear-gradient(
-		#f00 20%,
+		rgb(255, 255, 255) 20%,
 		transparent 45% 55%,
-		#ff00ff 80%
+		#b57295 80%
 	);
 	position: absolute;
 	animation: animate 6s infinite linear;
