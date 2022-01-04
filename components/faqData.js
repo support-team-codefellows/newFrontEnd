@@ -7,22 +7,22 @@ export const Data = [
     and it helps streamline sales, marketing efforts, customer service, accounting, and management for growing companies. Multiple people can access and edit the information about a particular client’s customer journey.`,
   },
   {
-    question: "How does Tanageld Work?",
+    question: "How does Tangled Work?",
     answer:
       "We track the actions of a potential customer through social media, email, and website channels. The system absorbs as much information as possible on leads before guiding them—or helping you guide them—through a planned journey that hits all the hot spots.",
   },
   {
-    question: "Benefits of Tanageld?",
+    question: "Benefits of Tangled?",
     answer:
-      "The benefits of Tanageld system are available to salespeople, marketing teams, customer support specialists, and anyone who comes in contact with customers and businesses.",
+      "The benefits of Tangled system are available to salespeople, marketing teams, customer support specialists, and anyone who comes in contact with customers and businesses.",
   },
   {
-    question: "How long does Tanageld take to see value?",
+    question: "How long does Tangled take to see value?",
     answer:
       "our platform starts to create value the moment you enter your first lead. For best results, make sure that all leads are processed through your platform.",
   },
   {
-    question: "Does Tanageld affect large and small businesses differently?",
+    question: "Does Tangled affect large and small businesses differently?",
     answer: `CRM is your marketing memory however big or small your business. Large businesses use it to collaborate when a global team is assigned to a single customer or deal. They also use CRM to instill discipline in the sales force.
 
       Smaller businesses often use CRM systems as a data engine for marketing campaigns. The built-in efficiencies and sales journey tracking are often the most valuable aspect for them.`,
