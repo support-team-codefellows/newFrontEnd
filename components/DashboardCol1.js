@@ -1,4 +1,5 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
+import {SiSimpleanalytics} from 'react-icons/si'
 
 import { BsPersonCircle } from "react-icons/bs";
 import {
@@ -220,6 +221,28 @@ export default function DashboardCol1() {
                     className={`${activeLink === 6 ? "active" : ""}`}
                   >
                     FAQ
+                  </Text>
+                </Link>
+              </Flex>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link display={["none", "none", "flex", "flex", "flex"]}>
+                  <Icon
+                    as={SiSimpleanalytics}
+                    fontSize="2xl"
+                    onClick={() => setActiveLink(9)}
+                    className={`${activeLink === 9 ? "active-icon" : ""}`}
+                  />
+                </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href="/charts"
+                >
+                  <Text
+                    onClick={() => setActiveLink(9)}
+                    className={`${activeLink === 9 ? "active" : ""}`}
+                  >
+                    Analysis
                   </Text>
                 </Link>
               </Flex>
