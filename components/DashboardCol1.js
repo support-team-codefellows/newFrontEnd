@@ -72,15 +72,14 @@ export default function DashboardCol1() {
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={BsPersonCircle} fontSize="2xl" />
+                  <Icon as={BsPersonCircle} fontSize="2xl" onClick={() => setActiveLink(8)} className={`${activeLink === 8 ? 'active-icon' : ''}`}/>
                 </Link>
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href='/Profile'
-
                 >
-                  <Text>Profile</Text>
+                  <Text onClick={() => setActiveLink(8)} className={`${activeLink === 8 ? 'active' : ''}`}>Profile</Text>
                 </Link>
               </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
