@@ -1,4 +1,5 @@
 import Link from "next/link";
+ // eslint-disable-next-line @next/next/link-passhref
  export const link = (<Link href="/" > <p> about</p></Link>);
 export const Data = [
   {
