@@ -1,0 +1,65 @@
+.logo{
+	position: relative;
+}
+.blur{
+	position: absolute;
+	filter: blur(20px);
+	z-index: -100;
+}
+.logo,.blur{
+	width: 60vw;
+	max-width: 24vh;
+	height: 5vw;
+	max-height: 50vh;
+	border-radius: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	margin-top: 20%;
+	margin-bottom: 50%;
+}
+.logo::before,.blur::before{
+	content: "";
+	width: 120%;
+	height: 200%;
+	background: linear-gradient(
+		rgb(255, 255, 255) 20%,
+		transparent 45% 55%,
+		#b57295 80%
+	);
+	position: absolute;
+	animation: animate 6s infinite linear;
+}
+.logo::after{
+	content: "";
+	background: #000000;
+	border-radius: 18px;
+	position: absolute;
+	inset: 2px;
+	z-index: -9999;
+}
+.texth2{
+	color:aliceblue;
+	background: black;
+	width:98%;
+	height:95%;
+	z-index:1;
+	border-radius:20px;
+
+
+}
+.myyspan{
+	display: flex;
+	justify-content: center;
+	margin-top:5%;
+	font-family:fantasy;
+}
+@keyframes animate{
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
+	}
+}

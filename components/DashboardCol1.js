@@ -1,4 +1,5 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
+import { BsPersonCircle } from "react-icons/bs";
 import {
   FiHome,
   FiBox,
@@ -14,9 +15,13 @@ import { LoginContext } from "./auth/context";
 export default function DashboardCol1() {
   const Context = useContext(LoginContext);
   const [activeLink, setActiveLink] = useState(1);
+  let [image, setImage] = useState("");
+
   useEffect(()=>{
     if(typeof window !== "undefined"){
       setActiveLink(JSON.parse(localStorage.getItem('activePage')) || 1);
+      let userImage = localStorage.getItem('fileBase64')
+      setImage(userImage) 
     }
   }, []);
   useEffect(()=>{
@@ -41,21 +46,11 @@ export default function DashboardCol1() {
           justifyContent="space-between"
         >
           <Flex flexDir="column" as="nav">
-            <Link
-              _hover={{ textDecor: "none" }}
-              display={["flex", "flex", "none", "flex", "flex"]}
-              href="/"
-            >
-              <Heading
-                mt={50}
-                mb={[25, 50, 50]}
-                fontSize={["4xl", "4xl", "2xl", "3xl", "4xl"]}
-                alignSelf="center"
-                letterSpacing="tight"
-              >
-                Tangeled.
-              </Heading>
-            </Link>
+        
+            <div className="logo">
+              <h2 className="texth2"><span className="myyspan"><Heading>Tangled</Heading></span></h2>
+              <div className="blur"></div>
+            </div>
             <Flex
               flexDir={["row", "row", "column", "column", "column"]}
               align={["center", "center", "center", "flex-start", "flex-start"]}
@@ -75,7 +70,19 @@ export default function DashboardCol1() {
                   <Text onClick={() => setActiveLink(1)} className={`${activeLink === 1 ? 'active' : ''}`}>Home</Text>
                 </Link>
               </Flex>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                <Link display={["none", "none", "flex", "flex", "flex"]}>
+                  <Icon as={BsPersonCircle} fontSize="2xl" />
+                </Link>
+                <Link
+                  _hover={{ textDecor: "none" }}
+                  display={["flex", "flex", "none", "flex", "flex"]}
+                  href='/Profile'
 
+                >
+                  <Text>Profile</Text>
+                </Link>
+              </Flex>
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPhone} fontSize="2xl" onClick={() => setActiveLink(2)} className={`${activeLink === 2 ? 'active-icon' : ''}`}/>
@@ -100,6 +107,7 @@ export default function DashboardCol1() {
                   <Text onClick={() => setActiveLink(3)} className={`${activeLink === 3 ? 'active' : ''}`}>On-Site</Text>
                 </Link>
               </Flex>
+
               <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiPlus} fontSize="2xl" onClick={() => setActiveLink(4)} className={`${activeLink === 4 ? 'active-icon' : ''}`}/>
@@ -156,7 +164,7 @@ export default function DashboardCol1() {
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
             <Avatar
               my={2}
-              src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png"
+              src={image}
             />
             <Text textAlign="center">{Context.user.username}</Text>
           </Flex>
