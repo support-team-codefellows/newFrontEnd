@@ -17,13 +17,12 @@ export default function reducer(state = inisialState, action) {
         ...state,
         onSite: !state.onSite,
       };
-case 'RATING':
-  return {
-    ...state,
-    rateing: action.payload,
-  };
+    case "RATING":
+      return {
+        ...state,
+        rateing: action.payload,
+      };
     default:
       return state;
   }
-
 }

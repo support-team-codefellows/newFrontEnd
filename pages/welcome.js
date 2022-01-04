@@ -4,22 +4,20 @@ import {
   Button,
   Flex,
   Box,
+  Spacer,
+  PopoverAnchor,
   Image,
   Heading,
   Stack,
   Text,
   Link,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import ChatFrom from "../components/chat/ChatForm";
 import { If, Then, Else } from "react-if";
 
-export default function Home() {
- 
+export default function Hero() {
   const Context = useContext(LoginContext);
   return (
     <>
-
       <Flex
         w={["100%", "100%", "90%", "90%", "85%"]}
         p="3%"
@@ -44,64 +42,21 @@ export default function Home() {
             <Heading
               as="h1"
               size="xl"
-              fontWeight="bold"
               color="primary.800"
-              textAlign={["center", "center", "left", "left"]}
-            >
-              Tangled
-            </Heading>
-            <Heading
-              as="h2"
-              size="md"
-              color="primary.800"
-              opacity="0.8"
-              fontSize="16px"
               fontWeight="normal"
-              lineHeight={1.5}
               textAlign={["center", "center", "left", "left"]}
             >
-              Customers value time and convenience, and while you can’t always
-              physically meet your customers where they’re at, you can use
-              omni-channel feedback and multiple customer support options to
-              allow customers to contact your support team in the way that’s
-              most convenient for them.
-              <br />
-              <br />
-              Tangled is a customer service platform that offers quality, fast,
-              and reliable customer service for your business.
+              Welcome Back, <b>{Context.user.username}</b>
             </Heading>
-            {Context.logout ? (
-              <span>
-                <Link href="/signup">
-                  <Button
-                    colorScheme="pink"
-                    bgColor="#b57295"
-                    borderRadius="8px"
-                    py="4"
-                    px="4"
-                    lineHeight="1"
-                    size="md"
-                  >
-                    Signup
-                  </Button>{" "}
-                </Link>
-                <Link href="/login">
-                  <Button
-                    colorScheme="pink"
-                    bgColor="#b57295"
-                    borderRadius="8px"
-                    py="4"
-                    px="4"
-                    lineHeight="1"
-                    size="md"
-                  >
-                    Login
-                  </Button>
-                </Link>
-              </span>
-            ) : (
-              <></>
-            )}
+            <Text fontSize="small" color="gray" ml={1}>
+          {new Date().toLocaleDateString(undefined, {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            weekday: "short",
+          })}
+        </Text>
+            
           </Stack>
           <Box
             w={{ base: "80%", sm: "60%", md: "50%" }}

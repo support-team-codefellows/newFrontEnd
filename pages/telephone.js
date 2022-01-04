@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useSelector } from "react-redux";
 import useInterval from "../components/hooks/useInterval";
 import {
   Flex,
@@ -33,9 +32,9 @@ import {
   StatLabel,
   StatNumber,
   Textarea,
-  IconButton
+  IconButton,
 } from "@chakra-ui/react";
-import { DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from "@chakra-ui/icons";
 import { LoginContext } from "../components/auth/context";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -52,7 +51,7 @@ function Telephone({ newData }) {
   const [newTickets, setNewTickets] = useState([]);
   const [processedTickets, setProcessedTickets] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const SelectorData = useSelector((state) => state.newData);
+  // const SelectorData = useSelector((state) => state.newData);
   const [unprocessedFlag, setUnprocessedFlag] = useState(true);
   const [processedFlag, setProcessedFlag] = useState(false);
   const [allFlag, setAllFlag] = useState(false);
@@ -360,7 +359,10 @@ function Telephone({ newData }) {
             <ModalFooter>
               <Button
                 colorScheme="blackAlpha"
-                onClick={() => {responseForm(currentTicket); onClose()}}
+                onClick={() => {
+                  responseForm(currentTicket);
+                  onClose();
+                }}
                 size="md"
                 bgColor="blackAlpha.900"
                 color="#fff"
