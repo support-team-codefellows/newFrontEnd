@@ -3,7 +3,6 @@ import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
 import { BsPersonCircle } from "react-icons/bs";
 import {
   FiHome,
-FiHome,
   FiPieChart,
   FiDollarSign,
   FiBox,
@@ -91,17 +90,12 @@ export default function DashboardCol1() {
                 <Link display={["none", "none", "flex", "flex", "flex"]}>
                   <Icon as={FiHome} fontSize="2xl" onClick={() => setActiveLink(1)} className={`${activeLink === 1 ? 'active-icon' : ''}`}/>
                 </Link>
-
+               
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href="/"
                 >
-
-                  <Text className="active">Home</Text>
-                </Link>
-              </Flex>
-
                   <Text onClick={() => setActiveLink(1)} className={`${activeLink === 1 ? 'active' : ''}`}>Home</Text>
                 </Link>
               </Flex>
