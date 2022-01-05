@@ -44,9 +44,9 @@ class Signup extends Component {
     const file = e.target.files[0];
     getBase64(file).then(base64 => {
       localStorage["fileBase64"] = base64;
-      console.debug("file stored",base64);
+      console.debug("file stored", base64);
     });
-};
+  };
 
   handleSubmit = async (e) => {
     console.log();
@@ -188,15 +188,24 @@ class Signup extends Component {
                 </div>
                 <FormControl id="fileUpload">
                   <FormLabel>
-                    <Button colorScheme='teal' variant='outline'>
-                      <input
-                        type="file"
-                        aria-label="File browser example"
-                        id="imageFile" 
-                        name='imageFile'
-                        onChange={this.imageUpload}
-                      >
-                      </input>
+                    <Button colorScheme='white'variant='ghost'>
+                      <div class="button-wrapper">
+                        <span class="label">
+                          Upload Image
+                        </span>
+                        <input
+                          type="file"
+                          aria-label="File browser example"
+                          id="upload"
+                          name='imageFile'
+                          onChange={this.imageUpload}
+                          className="upload-box"
+                        >
+                        </input>
+
+
+                      </div>
+
                       <span class="file-custom"></span>
                     </Button>
                   </FormLabel>
@@ -227,7 +236,7 @@ class Signup extends Component {
                     <Checkbox>Remember me</Checkbox>
                     <Box>
 
-                      <Link color="teal.500" href="/login">
+                      <Link color="blue.500" href="/login">
                         Login
                       </Link>
                     </Box>
@@ -261,11 +270,11 @@ class Signup extends Component {
   }
 }
 const getBase64 = (file) => {
-  return new Promise((resolve,reject) => {
-     const reader = new FileReader();
-     reader.onload = () => resolve(reader.result);
-     reader.onerror = error => reject(error);
-     reader.readAsDataURL(file);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+    reader.readAsDataURL(file);
   });
 }
 export default Signup;
