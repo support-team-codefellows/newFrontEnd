@@ -79,7 +79,7 @@ class Profile extends Component {
                                 </List>
                             </Text>
 
-                            <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Capabilities: {this.context.user.capabilities?.map(e,i => {
+                            <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Capabilities: {this.context.user.capabilities?.map((e,i )=> {
                                 return <Badge key={i} colorScheme='green'>{e}</Badge>
                             })}
                             </Text>
