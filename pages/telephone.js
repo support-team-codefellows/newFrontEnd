@@ -87,7 +87,6 @@ function Telephone({ newData }) {
     let obj = {
       ...item,
       status: "processed",
-      customerName: "marwan",
       username: resData.username,
       response: resData.response,
     };
