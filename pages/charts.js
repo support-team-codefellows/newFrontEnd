@@ -82,7 +82,7 @@ export default function MyChart() {
         datasets: [{ ...data.datasets[0], data: [...ratings] }],
       });
     });
-  }, [refreshButton]);
+  }, [data, refreshButton]);
 
   const [data2, setData2] = useState({
     labels: ["New Cases", "Processed", "Total"],
@@ -164,7 +164,7 @@ export default function MyChart() {
             });
           });
       });
-  }, [refreshButton]);
+  }, [data2,refreshButton]);
 
   return (
     <Flex

@@ -1,4 +1,4 @@
-import { BsFillChatDotsFill } from "react-icons/bs";
+import { FcSms } from "react-icons/fc";
 import {
   Popover,
   PopoverTrigger,
@@ -38,7 +38,7 @@ export default function ChatIcon() {
                   borderRadius="100px"
                   w="70px"
                   h="70px"
-                  icon={<BsFillChatDotsFill />}
+                  icon={<FcSms />}
                   _hover={{ transform: "scale(1.5)" }}
                 />
               {/* </Button> */}

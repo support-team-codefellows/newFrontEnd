@@ -55,7 +55,7 @@ class Profile extends Component {
                     <Box maxW="lg" borderWidth="1px" borderRadius="lg" overflow="hidden" width="100%">
                         <Box m="5" as="a" width="100%">
                             <Badge colorScheme='purple'>New</Badge>
-                            <Tag size='lg' key='md' variant='outline' colorScheme='purple' colorScheme='blue' align='end' float='right' m="1" mb="0">
+                            <Tag size='lg' key='md' variant='outline' colorScheme='purple'  align='end' float='right' m="1" mb="0">
                                 <TagLabel >Settings</TagLabel>
                                 <TagRightIcon as={FcSettings} />
                             </Tag>
@@ -68,7 +68,7 @@ class Profile extends Component {
                                 alt='Dan Abramov'
                             /> <Heading as='h6' size='xs' align="center" marginBottom="10%">
                                 <Badge variant='outline' colorScheme='green'></Badge>
-                                <Tag size='lg' key='md' variant='outline' colorScheme='purple' colorScheme='blue' align='end' m="1" mb="0">
+                                <Tag size='lg' key='md' variant='outline' colorScheme='purple'  align='end' m="1" mb="0">
                                     <TagLabel >Email: {this.context.user.email}</TagLabel>
                                     <TagRightIcon as={FcPortraitMode} />
                                 </Tag>
@@ -79,8 +79,8 @@ class Profile extends Component {
                                 </List>
                             </Text>
 
-                            <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Capabilities: {this.context.user.capabilities?.map(e => {
-                                return <Badge colorScheme='green'>{e}</Badge>
+                            <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Capabilities: {this.context.user.capabilities?.map(e,i => {
+                                return <Badge key={i} colorScheme='green'>{e}</Badge>
                             })}
                             </Text>
                             <Text color='gray.500' isTruncated m="5" mb="0" as="h4" size="md">Gender:

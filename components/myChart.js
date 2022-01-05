@@ -53,7 +53,7 @@ export default function MyChart() {
             let ratings = res.data.map(item => item.rating)
             setData({...data, labels: [...data.labels, ...usernamesArray], datasets:[{...data.datasets[0], data: [...ratings]}]});
         });
-      }, []);
+      }, [data]);
     
     
   const options = {
