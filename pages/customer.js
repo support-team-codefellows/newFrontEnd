@@ -34,10 +34,8 @@ import Auth from "../components/auth/auth";
 import { connect } from "react-redux";
 function Customer() {
   const ontext = useContext(LoginContext);
-  console.log(ontext);
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
-  console.log(selector);
   const [responsesArray, setResponsesArray] = useState([]);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [rate, setRate] = useState({ reating: 0, username: "" });
@@ -69,11 +67,11 @@ function Customer() {
 
   useEffect(() => {
     getResponses();
-  }, []);
+  }, [responsesArray]);
 
   // short polling:
   useInterval(async () => {
-    console.log("short polling is working");
+    let myCustomer = ontext.user.username;
     let responses = await axios.get(
       "https://test-401.herokuapp.com/telephoneTicket"
     );
@@ -81,26 +79,26 @@ function Customer() {
       "https://test-401.herokuapp.com/onSiteTicket"
     );
     let receivedResponses = [
-      ...responses.data.filter((item) => item.customerName === "marwan"),
-      ...responses2.data.filter((item) => item.customerName === "marwan"),
+      ...responses.data.filter((item) => Object.keys(item.response).length && item.customerName === myCustomer),
+      ...responses2.data.filter((item) => Object.keys(item.response).length && item.customerName === myCustomer),
     ];
     if (receivedResponses?.length !== responsesArray?.length) {
       console.log(">> the customer has received new responses");
-      setResponsesArray(receivedResponses);
+      setResponsesArray([...receivedResponses]);
     }
   }, 6000);
 
   async function getResponses() {
+    let myCustomer = ontext.user.username;
     let responses = await axios.get(
       "https://test-401.herokuapp.com/telephoneTicket"
     );
     let responses2 = await axios.get(
       "https://test-401.herokuapp.com/onSiteTicket"
     );
-    // CHANGE THE USERNAME
     setResponsesArray([
-      ...responses.data.filter((item) => item.customerName === "marwan"),
-      ...responses2.data.filter((item) => item.customerName === "marwan"),
+      ...responses.data.filter((item) => Object.keys(item.response).length && item.customerName === myCustomer),
+      ...responses2.data.filter((item) => Object.keys(item.response).length && item.customerName === myCustomer),
     ]);
   }
 
@@ -119,9 +117,7 @@ function Customer() {
         inputField
       );
       dispatch(newDataOnSite());
-      console.log("selector for onsite", selector.onSite);
     }
-    console.log("inputField", inputField);
     setSentSuccessfully(true);
     setTimeout(() => {
       setSentSuccessfully(false);

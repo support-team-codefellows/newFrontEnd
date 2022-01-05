@@ -62,26 +62,23 @@ function Site({ onSite }) {
   const [allFlag, setAllFlag] = useState(false);
   const [currentTicket, setCurrentTicket] = useState({});
 
-  function handleChange(item) {
-    console.log(item);
-  }
-
   useEffect(() => {
-    setResData({ ...resData, username: Context.user.username });
-  }, [resData,Context.user.username]);
+    setResData({ username: Context.user.username, response: {date:'', time:''} });
+  }, [Context.user.username]);
 
   const inputsHandler = (e) => {
     setResData({ ...resData, [e.target.name]: e.target.value });
   };
 
   const inputsHandler2 = (e) => {
-    setResData({
+    let data = {
       ...resData,
       response: {
         ...resData.response,
         [e.target.name]: e.target.value,
       },
-    });
+    }
+    setResData(data);
   };
 
   function switchToNew() {
@@ -106,7 +103,6 @@ function Site({ onSite }) {
     let obj = {
       ...item,
       status: "processed",
-      customerName: "marwan",
       username: resData.username,
       response: JSON.stringify(resData.response),
     };
@@ -165,7 +161,7 @@ function Site({ onSite }) {
         res.data.filter((item) => item.status === "processed")
       );
     });
-  }, [onSite]);
+  }, []);
 
   return (
     <>
@@ -361,13 +357,13 @@ function Site({ onSite }) {
               </FormControl>
               <FormControl>
                 <FormLabel  marginTop={"2vh"}>Appointment Details</FormLabel>
-                <Input type="date" name="date" onChange={inputsHandler2} marginBottom={"1vh"}/>
+                <Input type="date" name="date" onChange={(e)=>{inputsHandler2(e)}} marginBottom={"1vh"}/>
                 <Input
                   type="time"
                   name="time"
                   min="09:00"
                   max="15:00"
-                  onChange={inputsHandler2}
+                  onChange={(e)=>{inputsHandler2(e)}}
                 />
               </FormControl>
             </ModalBody>
