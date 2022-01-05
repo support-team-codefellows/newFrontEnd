@@ -189,8 +189,8 @@ class Signup extends Component {
                 <FormControl id="fileUpload">
                   <FormLabel>
                     <Button colorScheme='white'variant='ghost'>
-                      <div class="button-wrapper">
-                        <span class="label">
+                      <div className="button-wrapper">
+                        <span className="label">
                           Upload Image
                         </span>
                         <input
@@ -206,7 +206,7 @@ class Signup extends Component {
 
                       </div>
 
-                      <span class="file-custom"></span>
+                      <span className="file-custom"></span>
                     </Button>
                   </FormLabel>
                 </FormControl>

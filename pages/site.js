@@ -68,7 +68,7 @@ function Site({ onSite }) {
 
   useEffect(() => {
     setResData({ ...resData, username: Context.user.username });
-  }, [Context.user.username]);
+  }, [resData,Context.user.username]);
 
   const inputsHandler = (e) => {
     setResData({ ...resData, [e.target.name]: e.target.value });

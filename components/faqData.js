@@ -1,5 +1,4 @@
 import Link from "next/link";
- export const link = (<Link href="/" > <p> about</p></Link>);
 export const Data = [
   {
     question: "What Customer Relationship Management (CRM) Platform?",
