@@ -1,17 +1,8 @@
 import { Flex, Heading, Avatar, Text, Icon, Link } from "@chakra-ui/react";
-import {SiSimpleanalytics} from 'react-icons/si'
-
+import { If, Then, Else } from "react-if";
+import { SiSimpleanalytics } from "react-icons/si";
 import { BsPersonCircle } from "react-icons/bs";
-import {
-  FiHome,
-  FiPieChart,
-  FiDollarSign,
-  FiBox,
-  FiPhone,
-  FiCalendar,
-  FiUser,
-  FiPlus,
-} from "react-icons/fi";
+import { FiHome, FiPhone, FiCalendar, FiPlus } from "react-icons/fi";
 import { useContext } from "react";
 import {
   RiQuestionLine,
@@ -19,7 +10,6 @@ import {
   RiLogoutCircleLine,
 } from "react-icons/ri";
 import { useState, useEffect } from "react";
-import { If, Then, Else } from "react-if";
 import { LoginContext } from "./auth/context";
 export default function DashboardCol1() {
   const Context = useContext(LoginContext);
@@ -100,175 +90,232 @@ export default function DashboardCol1() {
                 </Link>
               </Flex>
 
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon as={BsPersonCircle} fontSize="2xl" onClick={() => setActiveLink(8)} className={`${activeLink === 8 ? 'active-icon' : ''}`}/>
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/Profile"
-                >
-                  <Text onClick={() => setActiveLink(8)} className={`${activeLink === 8 ? 'active' : ''}`}>Profile</Text>
-                </Link>
-              </Flex>
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon
-                    as={FiPhone}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(2)}
-                    className={`${activeLink === 2 ? "active-icon" : ""}`}
-                  />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/telephone"
-                >
-                  <Text
-                    onClick={() => setActiveLink(2)}
-                    className={`${activeLink === 2 ? "active" : ""}`}
-                  >
-                    Telephone
-                  </Text>
-                </Link>
-              </Flex>
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon
-                    as={FiCalendar}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(3)}
-                    className={`${activeLink === 3 ? "active-icon" : ""}`}
-                  />
-                </Link>
+              <If condition={Context.loggedIn}>
+                <Then>
+                  <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                    <Link display={["none", "none", "flex", "flex", "flex"]}>
+                      <Icon
+                        as={BsPersonCircle}
+                        fontSize="2xl"
+                        onClick={() => setActiveLink(8)}
+                        className={`${activeLink === 8 ? "active-icon" : ""}`}
+                      />
+                    </Link>
+                    <Link
+                      _hover={{ textDecor: "none" }}
+                      display={["flex", "flex", "none", "flex", "flex"]}
+                      href="/Profile"
+                    >
+                      <Text
+                        onClick={() => setActiveLink(8)}
+                        className={`${activeLink === 8 ? "active" : ""}`}
+                      >
+                        Profile
+                      </Text>
+                    </Link>
+                  </Flex>
+                  <If condition={Context.loggedIn && Context.user?.capabilities?.length > 2}>
+                    <Then>
+                      <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                        <Link
+                          display={["none", "none", "flex", "flex", "flex"]}
+                        >
+                          <Icon
+                            as={FiPhone}
+                            fontSize="2xl"
+                            onClick={() => setActiveLink(2)}
+                            className={`${
+                              activeLink === 2 ? "active-icon" : ""
+                            }`}
+                          />
+                        </Link>
+                        <Link
+                          _hover={{ textDecor: "none" }}
+                          display={["flex", "flex", "none", "flex", "flex"]}
+                          href="/telephone"
+                        >
+                          <Text
+                            onClick={() => setActiveLink(2)}
+                            className={`${activeLink === 2 ? "active" : ""}`}
+                          >
+                            Telephone
+                          </Text>
+                        </Link>
+                      </Flex>
+                      <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                        <Link
+                          display={["none", "none", "flex", "flex", "flex"]}
+                        >
+                          <Icon
+                            as={FiCalendar}
+                            fontSize="2xl"
+                            onClick={() => setActiveLink(3)}
+                            className={`${
+                              activeLink === 3 ? "active-icon" : ""
+                            }`}
+                          />
+                        </Link>
 
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/site"
-                >
-                  <Text
-                    onClick={() => setActiveLink(3)}
-                    className={`${activeLink === 3 ? "active" : ""}`}
-                  >
-                    On-Site
-                  </Text>
-                </Link>
-              </Flex>
+                        <Link
+                          _hover={{ textDecor: "none" }}
+                          display={["flex", "flex", "none", "flex", "flex"]}
+                          href="/site"
+                        >
+                          <Text
+                            onClick={() => setActiveLink(3)}
+                            className={`${activeLink === 3 ? "active" : ""}`}
+                          >
+                            On-Site
+                          </Text>
+                        </Link>
+                      </Flex>
+                      <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                        <Link
+                          display={["none", "none", "flex", "flex", "flex"]}
+                        >
+                          <Icon
+                            as={SiSimpleanalytics}
+                            fontSize="2xl"
+                            onClick={() => setActiveLink(9)}
+                            className={`${
+                              activeLink === 9 ? "active-icon" : ""
+                            }`}
+                          />
+                        </Link>
+                        <Link
+                          _hover={{ textDecor: "none" }}
+                          display={["flex", "flex", "none", "flex", "flex"]}
+                          href="/charts"
+                        >
+                          <Text
+                            onClick={() => setActiveLink(9)}
+                            className={`${activeLink === 9 ? "active" : ""}`}
+                          >
+                            Analysis
+                          </Text>
+                        </Link>
+                      </Flex>
+                    </Then>
+                    <Else>
+                      <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                        <Link
+                          display={["none", "none", "flex", "flex", "flex"]}
+                        >
+                          <Icon
+                            as={FiPlus}
+                            fontSize="2xl"
+                            onClick={() => setActiveLink(4)}
+                            className={`${
+                              activeLink === 4 ? "active-icon" : ""
+                            }`}
+                          />
+                        </Link>
 
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon
-                    as={FiPlus}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(4)}
-                    className={`${activeLink === 4 ? "active-icon" : ""}`}
-                  />
-                </Link>
-
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/customer"
-                >
-                  <Text
-                    onClick={() => setActiveLink(4)}
-                    className={`${activeLink === 4 ? "active" : ""}`}
-                  >
-                    Tickets
-                  </Text>
-                </Link>
-              </Flex>
-
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon
-                    as={RiLoginCircleLine}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(5)}
-                    className={`${activeLink === 5 ? "active-icon" : ""}`}
-                  />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/login"
-                >
-                  <Text
-                    onClick={() => setActiveLink(5)}
-                    className={`${activeLink === 5 ? "active" : ""}`}
-                  >
-                    Login
-                  </Text>
-                </Link>
-              </Flex>
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/FAQ"
-                >
-                  <Icon
-                    as={RiQuestionLine}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(6)}
-                    className={`${activeLink === 6 ? "active-icon" : ""}`}
-                  />
-                  <Text
-                    onClick={() => setActiveLink(6)}
-                    className={`${activeLink === 6 ? "active" : ""}`}
-                  >
-                    FAQ
-                  </Text>
-                </Link>
-              </Flex>
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon
-                    as={SiSimpleanalytics}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(9)}
-                    className={`${activeLink === 9 ? "active-icon" : ""}`}
-                  />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/charts"
-                >
-                  <Text
-                    onClick={() => setActiveLink(9)}
-                    className={`${activeLink === 9 ? "active" : ""}`}
-                  >
-                    Analysis
-                  </Text>
-                </Link>
-              </Flex>
-
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
-                  <Icon
-                    as={RiLogoutCircleLine}
-                    fontSize="2xl"
-                    onClick={() => setActiveLink(7)}
-                    className={`${activeLink === 7 ? "active-icon" : ""}`}
-                  />
-                </Link>
-                <Link
-                  _hover={{ textDecor: "none" }}
-                  display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/login"
-                >
-                  <Text
-                    onClick={() => setActiveLink(7)}
-                    className={`${activeLink === 7 ? "active" : ""}`}
-                  >
-                    <button onClick={Context.logout}>LogOut</button>
-                  </Text>
-                </Link>
-              </Flex>
+                        <Link
+                          _hover={{ textDecor: "none" }}
+                          display={["flex", "flex", "none", "flex", "flex"]}
+                          href="/customer"
+                        >
+                          <Text
+                            onClick={() => setActiveLink(4)}
+                            className={`${activeLink === 4 ? "active" : ""}`}
+                          >
+                            Tickets
+                          </Text>
+                        </Link>
+                      </Flex>
+                      <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                        <Link
+                          _hover={{ textDecor: "none" }}
+                          display={["flex", "flex", "none", "flex", "flex"]}
+                          href="/FAQ"
+                        >
+                          <Icon
+                            as={RiQuestionLine}
+                            fontSize="2xl"
+                            onClick={() => setActiveLink(6)}
+                            className={`${
+                              activeLink === 6 ? "active-icon" : ""
+                            }`}
+                          />
+                          <Text
+                            onClick={() => setActiveLink(6)}
+                            className={`${activeLink === 6 ? "active" : ""}`}
+                          >
+                            FAQ
+                          </Text>
+                        </Link>
+                      </Flex>
+                    </Else>
+                  </If>
+                  <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                    <Link display={["none", "none", "flex", "flex", "flex"]}>
+                      <Icon
+                        as={RiLogoutCircleLine}
+                        fontSize="2xl"
+                        onClick={() => setActiveLink(7)}
+                        className={`${activeLink === 7 ? "active-icon" : ""}`}
+                      />
+                    </Link>
+                    <Link
+                      _hover={{ textDecor: "none" }}
+                      display={["flex", "flex", "none", "flex", "flex"]}
+                      href="/login"
+                    >
+                      <Text
+                        onClick={() => setActiveLink(7)}
+                        className={`${activeLink === 7 ? "active" : ""}`}
+                      >
+                        <button onClick={Context.logout}>LogOut</button>
+                      </Text>
+                    </Link>
+                  </Flex>
+                </Then>
+                <Else>
+                  <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                    <Link display={["none", "none", "flex", "flex", "flex"]}>
+                      <Icon
+                        as={RiLoginCircleLine}
+                        fontSize="2xl"
+                        onClick={() => setActiveLink(5)}
+                        className={`${activeLink === 5 ? "active-icon" : ""}`}
+                      />
+                    </Link>
+                    <Link
+                      _hover={{ textDecor: "none" }}
+                      display={["flex", "flex", "none", "flex", "flex"]}
+                      href="/login"
+                    >
+                      <Text
+                        onClick={() => setActiveLink(5)}
+                        className={`${activeLink === 5 ? "active" : ""}`}
+                      >
+                        Login
+                      </Text>
+                    </Link>
+                  </Flex>
+                  <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
+                    <Link
+                      _hover={{ textDecor: "none" }}
+                      display={["flex", "flex", "none", "flex", "flex"]}
+                      href="/FAQ"
+                    >
+                      <Icon
+                        as={RiQuestionLine}
+                        fontSize="2xl"
+                        onClick={() => setActiveLink(6)}
+                        className={`${activeLink === 6 ? "active-icon" : ""}`}
+                      />
+                      <Text
+                        onClick={() => setActiveLink(6)}
+                        className={`${activeLink === 6 ? "active" : ""}`}
+                      >
+                        FAQ
+                      </Text>
+                    </Link>
+                  </Flex>
+                </Else>
+              </If>
             </Flex>
           </Flex>
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
