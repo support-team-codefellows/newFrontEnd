@@ -65,7 +65,6 @@ export default function Hero() {
             {/* TODO: Make this change every X secs */}
             <Image
               src="https://7dfairs.com/web/wp-content/uploads/2021/03/shutterstock_1753698680.jpg"
-              //   src="https://y26uq11r8xr1zyp0d3inciqv-wpengine.netdna-ssl.com/wp-content/uploads/2019/10/41-1-1024x597.jpg"
               alt="hero image"
               size="100%"
               objectFit="cover"
