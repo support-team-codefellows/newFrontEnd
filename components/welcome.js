@@ -137,6 +137,17 @@ export default function Hero() {
         >
           Logout
         </Button>
+        <Link href="/about">
+          <Text
+            fontSize="14px"
+            mt={2}
+            textAlign="left"
+            color="primary.800"
+            opacity="0.6"
+          >
+            More About Tangled
+          </Text>
+        </Link>
       </Stack>
       <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
         <Image

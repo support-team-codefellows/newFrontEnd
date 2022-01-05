@@ -66,8 +66,8 @@ export default function DashboardCol1() {
               wrap={["wrap", "wrap", "nowrap", "nowrap", "nowrap"]}
               justifyContent="center"
             >
-              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]}>
-                <Link display={["none", "none", "flex", "flex", "flex"]}>
+              <Flex className="sidebar-items" mr={[2, 6, 0, 0, 0]} >
+                <Link display={["none", "none", "flex", "flex", "flex"]} >
                   <Icon
                     as={FiHome}
                     fontSize="2xl"
@@ -80,6 +80,7 @@ export default function DashboardCol1() {
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
                   href="/"
+                  _focus="outline:0 !important"
                 >
                   <Text
                     onClick={() => setActiveLink(1)}
@@ -105,6 +106,7 @@ export default function DashboardCol1() {
                       _hover={{ textDecor: "none" }}
                       display={["flex", "flex", "none", "flex", "flex"]}
                       href="/Profile"
+                      _focus="outline:0 !important"
                     >
                       <Text
                         onClick={() => setActiveLink(8)}
@@ -133,6 +135,7 @@ export default function DashboardCol1() {
                           _hover={{ textDecor: "none" }}
                           display={["flex", "flex", "none", "flex", "flex"]}
                           href="/telephone"
+                          _focus="outline:0 !important"
                         >
                           <Text
                             onClick={() => setActiveLink(2)}
@@ -160,6 +163,7 @@ export default function DashboardCol1() {
                           _hover={{ textDecor: "none" }}
                           display={["flex", "flex", "none", "flex", "flex"]}
                           href="/site"
+                          _focus="outline:0 !important"
                         >
                           <Text
                             onClick={() => setActiveLink(3)}
@@ -186,6 +190,7 @@ export default function DashboardCol1() {
                           _hover={{ textDecor: "none" }}
                           display={["flex", "flex", "none", "flex", "flex"]}
                           href="/charts"
+                          _focus="outline:0 !important"
                         >
                           <Text
                             onClick={() => setActiveLink(9)}
@@ -215,6 +220,7 @@ export default function DashboardCol1() {
                           _hover={{ textDecor: "none" }}
                           display={["flex", "flex", "none", "flex", "flex"]}
                           href="/customer"
+                          _focus="outline:0 !important"
                         >
                           <Text
                             onClick={() => setActiveLink(4)}
@@ -229,6 +235,7 @@ export default function DashboardCol1() {
                           _hover={{ textDecor: "none" }}
                           display={["flex", "flex", "none", "flex", "flex"]}
                           href="/FAQ"
+                          _focus="outline:0 !important"
                         >
                           <Icon
                             as={RiQuestionLine}
@@ -261,6 +268,7 @@ export default function DashboardCol1() {
                       _hover={{ textDecor: "none" }}
                       display={["flex", "flex", "none", "flex", "flex"]}
                       href="/login"
+                      _focus="outline:0 !important"
                     >
                       <Text
                         onClick={() => setActiveLink(7)}
@@ -285,6 +293,7 @@ export default function DashboardCol1() {
                       _hover={{ textDecor: "none" }}
                       display={["flex", "flex", "none", "flex", "flex"]}
                       href="/login"
+                      _focus="outline:0 !important"
                     >
                       <Text
                         onClick={() => setActiveLink(5)}
@@ -299,6 +308,7 @@ export default function DashboardCol1() {
                       _hover={{ textDecor: "none" }}
                       display={["flex", "flex", "none", "flex", "flex"]}
                       href="/FAQ"
+                      _focus="outline:0 !important"
                     >
                       <Icon
                         as={RiQuestionLine}
@@ -321,6 +331,17 @@ export default function DashboardCol1() {
           <Flex flexDir="column" alignItems="center" mb={10} mt={5}>
             <Avatar my={2} src={image} />
             <Text textAlign="center">{Context.user.username}</Text>
+            <Link href="/about">
+            <Text
+              fontSize="xs"
+              mt={2}
+              textAlign="left"
+              color="white"
+              opacity="0.6"
+            >
+              About Tangled
+            </Text>
+          </Link>
           </Flex>
         </Flex>
       </Flex>

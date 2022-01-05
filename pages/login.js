@@ -3,9 +3,10 @@ import { When } from "react-if";
 import superagent from "superagent";
 import { LoginContext } from "../components/auth/context";
 import base64 from "base-64";
-import Router from 'next/router';
+import Router from "next/router";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import {
   Button,
   chakra,
@@ -16,7 +17,7 @@ import {
   Flex,
   Heading,
   InputGroup,
-  InputLeftElement,
+  Icon,
   Box,
   Link,
   Avatar,
@@ -46,22 +47,20 @@ class Login extends React.Component {
       .set(
         "authorization",
         `Basic ${base64.encode(`${this.state.email}:${this.state.password}`)}`
-      )
-    console.log('this is the response ', response.status);
+      );
+    console.log("this is the response ", response.status);
     if (response.status === 200) {
       Swal.fire({
-        position: 'centered',
-        icon: 'success',
-        title: 'You Logged in successfully',
+        position: "centered",
+        icon: "success",
+        title: "You Logged in successfully",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       this.context.login(this.state.email, this.state.password, response.body);
       console.log(response.body, "response");
-
     }
-    Router.push('/')
-
+    Router.push("/");
   };
   handleShowClick = () =>
     this.setState({ showPassword: !this.state.showPassword });
@@ -79,65 +78,63 @@ class Login extends React.Component {
             flexDirection="column"
             width="100%"
             height="100vh"
-            backgroundColor="gray.200"
+            backgroundColor="white"
             justifyContent="center"
             alignItems="center"
           >
-            <Stack
-              flexDir="column"
-              mb="2"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Box minW={{ base: "90%", md: "468px" }}>
-                <Heading color="black">Welcome Back</Heading>
-                <chakra.form onSubmit={this.handleSubmit}>
-                  <Stack spacing="6">
-                    <FormControl>
-                      <FormLabel>Email address</FormLabel>
-                      <Input
-                        type="email"
-                        autoComplete="email"
-                        required
-                        placeholder="Your Email"
-                        name="email"
-                        onChange={this.handleChange}
-                      />
-                    </FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <InputGroup size='md'>
-
-                      <Input
-                        type={this.state.showPassword ? "text" : "password"}
-                        placeholder="password"
-                        name="password"
-                        onChange={this.handleChange}
-                      />
-                      <InputRightElement width='4.5rem'>
-                        <Button h='1.75rem' size='sm' onClick={this.handleShowClick}>
-                          {this.state.showPassword ? 'Hide' : 'Show'}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
+            <Heading color="black">Welcome Back</Heading>
+            <br />
+            <chakra.form onSubmit={this.handleSubmit}>
+              <Stack spacing="6">
+                <FormControl>
+                  <FormLabel>Email address</FormLabel>
+                  <Input
+                    type="email"
+                    autoComplete="email"
+                    required
+                    placeholder="Your Email"
+                    name="email"
+                    onChange={this.handleChange}
+                  />
+                </FormControl>
+                <FormLabel>Password</FormLabel>
+                <InputGroup size="md">
+                  <Input
+                    type={this.state.showPassword ? "text" : "password"}
+                    placeholder="password"
+                    name="password"
+                    onChange={this.handleChange}
+                  />
+                  <InputRightElement width="4.5rem">
                     <Button
-                      type="submit"
-                      colorScheme="gray"
-                      size="lg"
-                      fontSize="md"
+                      h="1.75rem"
+                      size="sm"
+                      onClick={this.handleShowClick}
                     >
-                      Sign in
+                      <Icon
+                        as={this.state.showPassword ? ViewOffIcon : ViewIcon}
+                      />
                     </Button>
-                  </Stack>
-                </chakra.form>
+                  </InputRightElement>
+                </InputGroup>
+                <Button
+                  type="submit"
+                  colorScheme="pink"
+                  size="lg"
+                  fontSize="md"
+                  bgColor="blackAlpha.900"
+                >
+                  Sign in
+                </Button>
+              </Stack>
+            </chakra.form>
 
-                <Box>
-                  New to us?{" "}
-                  <Link color="teal.500" href="/signup">
-                    Sign Up
-                  </Link>
-                </Box>
-              </Box>{" "}
-            </Stack>
+            <Box marginTop="2%">
+              New to us?{" "}
+              <Link color="#b57295" href="/signup">
+                Sign Up
+              </Link>
+            </Box>
           </Flex>
         </When>
       </>

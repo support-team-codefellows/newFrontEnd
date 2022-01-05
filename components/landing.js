@@ -49,7 +49,7 @@ export default function landing() {
         </Heading>
 
         <span>
-          <Link href="/signup" textDecoration= "none !important">
+          <Link href="/signup" textDecoration="none !important">
             <Button
               colorScheme="pink"
               bgColor="#b57295"
@@ -62,7 +62,7 @@ export default function landing() {
               Signup
             </Button>{" "}
           </Link>
-          <Link href="/login" textDecoration= "none !important">
+          <Link href="/login" textDecoration="none !important">
             <Button
               colorScheme="pink"
               bgColor="#b57295"
@@ -71,10 +71,20 @@ export default function landing() {
               px="4"
               lineHeight="1"
               size="md"
-              
             >
               Login
             </Button>
+          </Link>
+          <Link href="/about">
+            <Text
+              fontSize="14px"
+              mt={2}
+              textAlign="left"
+              color="primary.800"
+              opacity="0.6"
+            >
+              More About Tangled
+            </Text>
           </Link>
         </span>
       </Stack>
