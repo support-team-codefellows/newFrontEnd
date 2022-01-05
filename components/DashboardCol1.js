@@ -171,7 +171,7 @@ export default function DashboardCol1() {
                 <Link
                   _hover={{ textDecor: "none" }}
                   display={["flex", "flex", "none", "flex", "flex"]}
-                  href="/customer"
+                  href="/customr"
                 >
                   <Text
                     onClick={() => setActiveLink(4)}
