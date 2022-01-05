@@ -136,7 +136,6 @@ class Signup extends Component {
       <>
         <FormErrors formErrors={this.state.formErrors} />
         <When condition={!this.context.loggedIn}>
-          <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
               <Stack spacing={4} w={"full"} maxW={"md"}>
                 <Heading fontSize={"2xl"}>Create your account</Heading>
@@ -188,7 +187,7 @@ class Signup extends Component {
                 </div>
                 <FormControl id="fileUpload">
                   <FormLabel>
-                    <Button colorScheme='white'variant='ghost'>
+                    <Button colorScheme='white' variant='ghost' padding="0 16px 0 0 !important">
                       <div className="button-wrapper">
                         <span className="label">
                           Upload Image
@@ -231,39 +230,30 @@ class Signup extends Component {
                   <Stack
                     direction={{ base: "column", sm: "row" }}
                     align={"start"}
-                    justify={"space-between"}
+                    justify={"flex-start"}
                   >
                     <Checkbox>Remember me</Checkbox>
                     <Box>
 
-                      <Link color="blue.500" href="/login">
+                      <Link color="#b57295" href="/login">
                         Login
                       </Link>
                     </Box>
-                    <Link color={"blue.500"}>Forgot password?</Link>
+                    <Link color={"#b57295"}>Forgot password?</Link>
                   </Stack>
                   <Button
-                    colorScheme={"blue"}
+                    colorScheme="pink"
                     variant={"solid"}
                     onClick={this.handleSubmit}
                     type="submit"
                     disabled={!this.state.formValid}
+                    bgColor="blackAlpha.900"
                   >
                     Sign up
                   </Button>
                 </Stack>
               </Stack>
             </Flex>
-            <Flex flex={1}>
-              <Image
-                alt={"Login Image"}
-                objectFit={"cover"}
-                src={
-                  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
-                }
-              />
-            </Flex>
-          </Stack>
         </When>
       </>
     );
