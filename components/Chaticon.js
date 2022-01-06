@@ -46,7 +46,7 @@ export default function ChatIcon() {
             {/* <Button   ></Button> */}
  
           </PopoverTrigger>
-          <PopoverContent background={'transparent'} borderBlock={'none'}    >
+          <PopoverContent  borderBlock={'none'}    >
             <PopoverHeader fontWeight="semibold">Chat</PopoverHeader>
             <PopoverArrow />
             <PopoverCloseButton />
